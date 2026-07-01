@@ -461,11 +461,10 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
 @keyframes ctaPulse{0%,100%{box-shadow:0 4px 20px rgba(184,134,11,.35),0 0 0 0 rgba(184,134,11,.4)}60%{box-shadow:0 4px 20px rgba(184,134,11,.35),0 0 0 12px rgba(184,134,11,0)}}
 
 /* Star rating badge */
-.rating-badge{display:flex;flex-direction:column;gap:4px}
-.stars{display:flex;gap:1px;align-items:center;margin-bottom:2px}
-.star-icon{font-size:13px;line-height:1}
-.rating-score{font-size:14px;font-weight:500;color:#C9A84C;letter-spacing:.5px;display:block}
-.rating-label{font-size:10px;color:rgba(245,232,192,.5);letter-spacing:1.5px;text-transform:uppercase}
+.rating-badge{display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center}
+.stars{display:flex;gap:2px;align-items:center;justify-content:center;margin-bottom:2px}
+.star-icon{font-size:14px;line-height:1;color:#C9A84C}
+.rating-label{font-size:10px;color:#C9A84C;letter-spacing:1.5px;text-transform:uppercase}
 
 @media(max-width:1024px){#sticky-cta{bottom:20px;right:16px}}
 
@@ -539,10 +538,9 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
       <div class="hero-awards reveal" style="transition-delay:.7s">
         <div class="awd rating-badge">
           <div class="stars">
-            <span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon" style="opacity:.45">★</span>
+            <span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon">★</span><span class="star-icon">★</span>
           </div>
-          <span class="rating-score">4.3 / 5</span>
-          <span class="rating-label">Opinie klientów na Google</span>
+          <span class="rating-label">Certyfikowana jakość w Gorlicach</span>
         </div>
       </div>
     </div>
