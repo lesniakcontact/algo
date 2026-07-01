@@ -1375,8 +1375,9 @@ function spcDyn(i,btn){
     root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
   }
 
+  const RAW='https://raw.githubusercontent.com/lesniakcontact/algo/main/';
   function fetchJSON(file){
-    return fetch(file+'?_='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+    return fetch(RAW+file+'?_='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
   }
 
   fetchJSON('zabiegi.json').then(d=>{lastZabiegiJSON=JSON.stringify(d);renderZabiegi(d);}).catch(()=>{});
