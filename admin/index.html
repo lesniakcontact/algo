@@ -267,8 +267,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
   zabiegiData = null; zabiegiSHA = '';
   document.getElementById('pwd-input').value = '';
   document.getElementById('login-error').textContent = '';
-  document.getElementById('panel').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  window.location.href = '/';
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
