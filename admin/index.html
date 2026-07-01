@@ -17,350 +17,119 @@
       --text: #F5E8C0;
       --text-dim: rgba(245,232,192,.5);
       --red: #c0392b;
+      --green: #7dbf7d;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-    }
+    body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; }
 
-    /* ── LOGIN ── */
-    #login-screen {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
-    }
+    /* ── LOGIN ─────────────────────────────────────────── */
+    #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
 
-    .login-box {
-      width: 100%;
-      max-width: 420px;
-      border: 1px solid var(--gold-dim);
-      padding: 3rem 2.5rem;
-      background: var(--bg2);
-    }
+    .login-box { width: 100%; max-width: 420px; border: 1px solid var(--gold-dim); padding: 3rem 2.5rem; background: var(--bg2); }
+    .login-logo { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; letter-spacing: .25em; color: var(--gold); text-align: center; margin-bottom: .25rem; }
+    .login-sub { text-align: center; font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 2.5rem; }
+    .login-box label { display: block; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: .5rem; }
+    .login-box input[type="password"] { width: 100%; background: transparent; border: 1px solid var(--gold-dim); color: var(--text); font-family: 'Jost', sans-serif; font-size: .9rem; padding: .75rem 1rem; outline: none; transition: border-color .2s; }
+    .login-box input[type="password"]:focus { border-color: var(--gold); }
+    #login-error { margin-top: 1rem; font-size: .8rem; color: var(--red); text-align: center; min-height: 1.2em; }
 
-    .login-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      letter-spacing: .25em;
-      color: var(--gold);
-      text-align: center;
-      margin-bottom: .25rem;
-    }
-
-    .login-sub {
-      text-align: center;
-      font-size: .75rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 2.5rem;
-    }
-
-    .login-box label {
-      display: block;
-      font-size: .7rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: .5rem;
-    }
-
-    .login-box input[type="password"] {
-      width: 100%;
-      background: transparent;
-      border: 1px solid var(--gold-dim);
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-size: .9rem;
-      padding: .75rem 1rem;
-      outline: none;
-      transition: border-color .2s;
-    }
-
-    .login-box input[type="password"]:focus {
-      border-color: var(--gold);
-    }
-
-    .btn-gold {
-      display: block;
-      width: 100%;
-      margin-top: 1.5rem;
-      padding: .85rem 1rem;
-      background: var(--gold);
-      color: var(--bg);
-      font-family: 'Jost', sans-serif;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-
+    /* ── BUTTONS ───────────────────────────────────────── */
+    .btn-gold { display: block; width: 100%; margin-top: 1.5rem; padding: .85rem 1rem; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity .2s; }
     .btn-gold:hover { opacity: .85; }
     .btn-gold:disabled { opacity: .4; cursor: not-allowed; }
 
-    #login-error {
-      margin-top: 1rem;
-      font-size: .8rem;
-      color: var(--red);
-      text-align: center;
-      min-height: 1.2em;
-    }
-
-    /* ── MAIN PANEL ── */
-    #panel { display: none; }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .9rem 2rem;
-      border-bottom: 1px solid var(--gold-dim);
-      background: var(--bg2);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .topbar-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      letter-spacing: .2em;
-      color: var(--gold);
-    }
-
-    .topbar-right {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    #status-msg {
-      font-size: .75rem;
-      letter-spacing: .08em;
-      color: var(--text-dim);
-      min-width: 10ch;
-      text-align: right;
-    }
-
-    #status-msg.ok { color: #7dbf7d; }
-    #status-msg.err { color: var(--red); }
-
-    .btn-outline {
-      padding: .5rem 1.2rem;
-      background: transparent;
-      border: 1px solid var(--gold-dim);
-      color: var(--gold);
-      font-family: 'Jost', sans-serif;
-      font-size: .72rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: border-color .2s, color .2s;
-    }
-
+    .btn-outline { padding: .5rem 1.2rem; background: transparent; border: 1px solid var(--gold-dim); color: var(--gold); font-family: 'Jost', sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; }
     .btn-outline:hover { border-color: var(--gold); }
 
-    .btn-save {
-      padding: .5rem 1.5rem;
-      background: var(--gold);
-      color: var(--bg);
-      font-family: 'Jost', sans-serif;
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: opacity .2s;
-    }
-
+    .btn-save { padding: .5rem 1.5rem; background: var(--gold); color: var(--bg); font-family: 'Jost', sans-serif; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity .2s; }
     .btn-save:hover { opacity: .85; }
     .btn-save:disabled { opacity: .4; cursor: not-allowed; }
 
-    .content { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+    .btn-icon { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 1.1rem; line-height: 1; padding: .35rem .5rem; transition: color .15s; }
+    .btn-icon:hover { color: var(--red); }
 
-    .content-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 300;
-      letter-spacing: .15em;
-      color: var(--gold);
-      margin-bottom: .4rem;
-    }
+    .btn-add { display: flex; align-items: center; gap: .5rem; padding: .65rem 1.2rem; background: none; color: var(--text-dim); font-family: 'Jost', sans-serif; font-size: .75rem; letter-spacing: .08em; cursor: pointer; width: 100%; border: 1px dashed var(--gold-dim); transition: color .2s, border-color .2s; margin-top: 1.5rem; justify-content: center; }
+    .btn-add:hover { color: var(--gold); border-color: var(--gold); }
 
-    .content-hint {
-      font-size: .75rem;
-      letter-spacing: .08em;
-      color: var(--text-dim);
-      margin-bottom: 2.5rem;
-    }
+    .spinner { display: inline-block; width: .9em; height: .9em; border: 2px solid rgba(201,168,76,.3); border-top-color: var(--gold); border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── KATEGORIA BLOCK ── */
-    .kat-block {
-      margin-bottom: 2rem;
-      border: 1px solid var(--gold-dim);
-    }
+    /* ── TOPBAR ────────────────────────────────────────── */
+    #panel { display: none; }
 
-    .kat-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: .8rem 1.2rem;
-      background: rgba(201,168,76,.05);
-      border-bottom: 1px solid var(--gold-dim);
-      cursor: pointer;
-      user-select: none;
-    }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: .9rem 2rem; border-bottom: 1px solid var(--gold-dim); background: var(--bg2); position: sticky; top: 0; z-index: 20; }
+    .topbar-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: .2em; color: var(--gold); }
+    .topbar-right { display: flex; gap: 1rem; align-items: center; }
 
+    #status-msg { font-size: .75rem; letter-spacing: .08em; color: var(--text-dim); min-width: 12ch; text-align: right; }
+    #status-msg.ok { color: var(--green); }
+    #status-msg.err { color: var(--red); }
+
+    /* ── TABS ──────────────────────────────────────────── */
+    .tabs { display: flex; border-bottom: 1px solid var(--gold-dim); background: var(--bg2); position: sticky; top: 54px; z-index: 19; }
+    .tab-btn { padding: .9rem 2rem; font-family: 'Jost', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: color .2s, border-color .2s; }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    /* ── CONTENT ───────────────────────────────────────── */
+    .content { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; letter-spacing: .15em; color: var(--gold); margin-bottom: .35rem; }
+    .section-hint { font-size: .75rem; letter-spacing: .08em; color: var(--text-dim); margin-bottom: 2.5rem; }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── CENNIK EDITOR ─────────────────────────────────── */
+    .kat-block { margin-bottom: 2rem; border: 1px solid var(--gold-dim); }
+    .kat-header { display: flex; align-items: center; gap: 1rem; padding: .8rem 1.2rem; background: rgba(201,168,76,.05); border-bottom: 1px solid var(--gold-dim); cursor: pointer; user-select: none; }
     .kat-header:hover { background: rgba(201,168,76,.08); }
-
-    .kat-arrow {
-      color: var(--gold);
-      font-size: .7rem;
-      transition: transform .2s;
-      flex-shrink: 0;
-    }
-
+    .kat-arrow { color: var(--gold); font-size: .7rem; transition: transform .2s; flex-shrink: 0; }
     .kat-block.collapsed .kat-arrow { transform: rotate(-90deg); }
-
-    .kat-name-input {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid transparent;
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-size: .85rem;
-      font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      width: 100%;
-      outline: none;
-      transition: border-color .2s;
-      cursor: text;
-    }
-
-    .kat-name-input:focus {
-      border-bottom-color: var(--gold);
-      background: rgba(201,168,76,.04);
-    }
-
+    .kat-name-input { background: transparent; border: none; border-bottom: 1px solid transparent; color: var(--text); font-family: 'Jost', sans-serif; font-size: .85rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; width: 100%; outline: none; transition: border-color .2s; cursor: text; }
+    .kat-name-input:focus { border-bottom-color: var(--gold); background: rgba(201,168,76,.04); }
     .kat-name-input:hover { border-bottom-color: var(--gold-dim); }
-
     .kat-body { padding: 0; }
     .kat-block.collapsed .kat-body { display: none; }
 
-    table.ztab {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    table.ztab thead tr {
-      border-bottom: 1px solid var(--gold-dim);
-    }
-
-    table.ztab th {
-      padding: .6rem 1.2rem;
-      text-align: left;
-      font-size: .65rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 400;
-    }
-
-    table.ztab th:last-child { width: 130px; }
-
-    table.ztab td {
-      padding: 0;
-      border-bottom: 1px solid rgba(184,134,11,.12);
-    }
-
+    table.ztab { width: 100%; border-collapse: collapse; }
+    table.ztab thead tr { border-bottom: 1px solid var(--gold-dim); }
+    table.ztab th { padding: .6rem 1.2rem; text-align: left; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); font-weight: 400; }
+    table.ztab td { padding: 0; border-bottom: 1px solid rgba(184,134,11,.12); }
     table.ztab tr:last-child td { border-bottom: none; }
-
     table.ztab tr:hover td { background: rgba(201,168,76,.03); }
 
-    .cell-input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-size: .87rem;
-      font-weight: 300;
-      padding: .75rem 1.2rem;
-      outline: none;
-      transition: background .15s;
-    }
+    .cell-input { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Jost', sans-serif; font-size: .87rem; font-weight: 300; padding: .75rem 1.2rem; outline: none; transition: background .15s; }
+    .cell-input:focus { background: rgba(201,168,76,.07); }
+    td.td-cena .cell-input { color: var(--gold); font-weight: 400; }
+    td.td-del { width: 44px; text-align: center; padding: 0 .5rem; }
 
-    .cell-input:focus {
-      background: rgba(201,168,76,.07);
-    }
-
-    td.td-cena .cell-input {
-      color: var(--gold);
-      font-weight: 400;
-    }
-
-    td.td-del {
-      width: 40px;
-      text-align: center;
-      padding: 0 .5rem;
-    }
-
-    .btn-del {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      font-size: 1rem;
-      line-height: 1;
-      padding: .4rem;
-      transition: color .15s;
-    }
-
-    .btn-del:hover { color: var(--red); }
-
-    .add-row-btn {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .6rem 1.2rem;
-      background: none;
-      color: var(--text-dim);
-      font-family: 'Jost', sans-serif;
-      font-size: .75rem;
-      letter-spacing: .08em;
-      cursor: pointer;
-      width: 100%;
-      transition: color .2s, background .2s;
-      border: none;
-      border-top: 1px solid rgba(184,134,11,.12);
-    }
-
+    .add-row-btn { display: flex; align-items: center; gap: .5rem; padding: .6rem 1.2rem; background: none; color: var(--text-dim); font-family: 'Jost', sans-serif; font-size: .75rem; letter-spacing: .08em; cursor: pointer; width: 100%; transition: color .2s, background .2s; border: none; border-top: 1px solid rgba(184,134,11,.12); }
     .add-row-btn:hover { color: var(--gold); background: rgba(201,168,76,.04); }
 
-    .spinner {
-      display: inline-block;
-      width: .9em;
-      height: .9em;
-      border: 2px solid rgba(201,168,76,.3);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin .6s linear infinite;
-      vertical-align: middle;
-    }
+    /* ── ZABIEGI EDITOR ────────────────────────────────── */
+    .zab-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 768px) { .zab-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .zab-grid { grid-template-columns: 1fr; } }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .zab-card { border: 1px solid var(--gold-dim); background: var(--bg2); display: flex; flex-direction: column; gap: 0; position: relative; transition: border-color .2s; }
+    .zab-card:hover { border-color: rgba(184,134,11,.5); }
+
+    .zab-img-wrap { height: 120px; background: rgba(201,168,76,.04); border-bottom: 1px solid var(--gold-dim); overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; }
+    .zab-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .zab-img-placeholder { opacity: .15; }
+    .zab-img-placeholder svg { width: 40px; height: 40px; }
+
+    .zab-fields { padding: 1rem; display: flex; flex-direction: column; gap: .75rem; flex: 1; }
+
+    .zab-field-label { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: .25rem; }
+
+    .zab-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(184,134,11,.2); color: var(--text); font-family: 'Jost', sans-serif; font-size: .88rem; font-weight: 400; padding: .3rem 0; outline: none; transition: border-color .2s; }
+    .zab-input:focus { border-bottom-color: var(--gold); }
+    .zab-input.opis { font-size: .78rem; font-weight: 300; color: rgba(245,232,192,.7); }
+    .zab-input.url { font-size: .72rem; color: var(--text-dim); font-family: monospace; }
+
+    .zab-del-btn { position: absolute; top: .5rem; right: .5rem; background: rgba(10,7,0,.7); border: 1px solid rgba(184,134,11,.2); color: var(--text-dim); cursor: pointer; font-size: .75rem; line-height: 1; padding: .3rem .5rem; transition: color .15s, border-color .15s; }
+    .zab-del-btn:hover { color: var(--red); border-color: var(--red); }
   </style>
 </head>
 <body>
@@ -377,7 +146,7 @@
   </div>
 </div>
 
-<!-- MAIN PANEL -->
+<!-- PANEL -->
 <div id="panel">
   <div class="topbar">
     <div class="topbar-logo">ALGO</div>
@@ -387,85 +156,83 @@
       <button class="btn-save" id="save-btn">Zapisz cennik</button>
     </div>
   </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="cennik">Cennik</button>
+    <button class="tab-btn" data-tab="zabiegi">Zabiegi</button>
+  </div>
+
   <div class="content">
-    <div class="content-title">Cennik</div>
-    <div class="content-hint">Kliknij w nazwę lub cenę, aby edytować. Zmiany zapisz przyciskiem w górnym pasku.</div>
-    <div id="editor"></div>
+    <!-- CENNIK -->
+    <div class="tab-pane active" id="pane-cennik">
+      <div class="section-title">Cennik</div>
+      <div class="section-hint">Kliknij w nazwę lub cenę aby edytować. Zapisz przyciskiem w górnym pasku.</div>
+      <div id="cennik-editor"></div>
+    </div>
+
+    <!-- ZABIEGI -->
+    <div class="tab-pane" id="pane-zabiegi">
+      <div class="section-title">Zabiegi</div>
+      <div class="section-hint">Edytuj nazwę, opis i zdjęcie każdego zabiegu. Zdjęcie — link URL do obrazka (np. z Imgur, CDN). Zapisz przyciskiem w górnym pasku.</div>
+      <div class="zab-grid" id="zabiegi-editor"></div>
+      <button class="btn-add" id="add-zabieg-btn">+ Dodaj zabieg</button>
+    </div>
   </div>
 </div>
 
 <script>
 const REPO = 'lesniakcontact/algo';
-const FILE = 'cennik.json';
-const API  = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
-
-// Access credential — assembled at runtime
+const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
 const _a = ['***REMOVED***', '***REMOVED***', '***REMOVED***'];
 const _k = () => _a.join('');
 
-const PWD_HASH = '8a17a0f1e3b4c2d5f6e7a8b9c0d1e2f3'; // checked client-side only
+// State
+let cennikSHA = '', cennikData = null;
+let zabiegiSHA = '', zabiegiData = null;
+let activeTab = 'cennik';
 
-let fileSHA = '';
-let data = null;
+// ── UTILS ──────────────────────────────────────────────────────────────────
+
+function b64e(s) { return btoa(unescape(encodeURIComponent(s))); }
+function b64d(s) { return decodeURIComponent(escape(atob(s))); }
+
+function setStatus(msg, type='') {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.className = type;
+  if (type === 'ok') setTimeout(() => { el.textContent = ''; el.className = ''; }, 4000);
+}
+
+function headers() {
+  return { Authorization: `Bearer ${_k()}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+}
+
+async function ghGet(file) {
+  const res = await fetch(API_BASE + file, { headers: headers() });
+  if (!res.ok) throw new Error(`GitHub ${res.status}`);
+  const j = await res.json();
+  return { data: JSON.parse(b64d(j.content.replace(/\n/g,''))), sha: j.sha };
+}
+
+async function ghPut(file, sha, data, msg) {
+  const res = await fetch(API_BASE + file, {
+    method: 'PUT',
+    headers: headers(),
+    body: JSON.stringify({ message: msg, content: b64e(JSON.stringify(data, null, 2)), sha })
+  });
+  if (!res.ok) { const e = await res.json().catch(()=>{}); throw new Error(e?.message || `GitHub ${res.status}`); }
+  return (await res.json()).content.sha;
+}
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 
 async function checkPassword(pwd) {
-  const enc = new TextEncoder().encode(pwd);
-  const buf = await crypto.subtle.digest('SHA-256', enc);
-  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  // Compare against expected hash of ALGOVIP2026
-  return hex === '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('') === '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
 }
-
-async function fetchCennik() {
-  const res = await fetch(API, {
-    headers: { Authorization: `Bearer ${_k()}`, Accept: 'application/vnd.github+json' }
-  });
-  if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-  const json = await res.json();
-  fileSHA = json.sha;
-  return JSON.parse(b64Decode(json.content.replace(/\n/g, '')));
-}
-
-async function saveCennik(dataObj) {
-  const content = b64Encode(JSON.stringify(dataObj, null, 2));
-  const res = await fetch(API, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${_k()}`,
-      Accept: 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      message: 'Aktualizacja cennika',
-      content,
-      sha: fileSHA
-    })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub API ${res.status}`);
-  }
-  const json = await res.json();
-  fileSHA = json.content.sha;
-}
-
-function b64Encode(str) { return btoa(unescape(encodeURIComponent(str))); }
-function b64Decode(str) { return decodeURIComponent(escape(atob(str))); }
-
-function setStatus(msg, type = '') {
-  const el = document.getElementById('status-msg');
-  el.textContent = msg;
-  el.className = type;
-}
-
-// ── LOGIN FLOW ─────────────────────────────────────────────────────────────
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
-document.getElementById('pwd-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
-});
+document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 
 async function doLogin() {
   const pwd = document.getElementById('pwd-input').value;
@@ -476,8 +243,7 @@ async function doLogin() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
-  const ok = await checkPassword(pwd);
-  if (!ok) {
+  if (!await checkPassword(pwd)) {
     errEl.textContent = 'Nieprawidłowe hasło';
     btn.disabled = false;
     btn.textContent = 'Zaloguj';
@@ -485,10 +251,10 @@ async function doLogin() {
   }
 
   try {
-    data = await fetchCennik();
+    await loadAllData();
     localStorage.setItem('algo_auth', '1');
     showPanel();
-  } catch (e) {
+  } catch(e) {
     errEl.textContent = `Błąd połączenia: ${e.message}`;
     btn.disabled = false;
     btn.textContent = 'Zaloguj';
@@ -497,8 +263,8 @@ async function doLogin() {
 
 document.getElementById('logout-btn').addEventListener('click', () => {
   localStorage.removeItem('algo_auth');
-  data = null;
-  fileSHA = '';
+  cennikData = null; cennikSHA = '';
+  zabiegiData = null; zabiegiSHA = '';
   document.getElementById('pwd-input').value = '';
   document.getElementById('login-error').textContent = '';
   document.getElementById('panel').style.display = 'none';
@@ -511,7 +277,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
     try {
-      data = await fetchCennik();
+      await loadAllData();
       showPanel();
     } catch {
       localStorage.removeItem('algo_auth');
@@ -521,20 +287,42 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// ── RENDER EDITOR ──────────────────────────────────────────────────────────
+async function loadAllData() {
+  const [c, z] = await Promise.all([
+    ghGet('cennik.json'),
+    ghGet('zabiegi.json')
+  ]);
+  cennikData = c.data; cennikSHA = c.sha;
+  zabiegiData = z.data; zabiegiSHA = z.sha;
+}
+
+// ── TABS ───────────────────────────────────────────────────────────────────
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeTab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b===btn));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'pane-'+activeTab));
+    const saveBtn = document.getElementById('save-btn');
+    saveBtn.textContent = activeTab === 'cennik' ? 'Zapisz cennik' : 'Zapisz zabiegi';
+  });
+});
+
+// ── SHOW PANEL ─────────────────────────────────────────────────────────────
 
 function showPanel() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('panel').style.display = 'block';
-  renderEditor();
+  renderCennik();
+  renderZabiegi();
 }
 
-function renderEditor() {
-  const root = document.getElementById('editor');
+// ── CENNIK EDITOR ──────────────────────────────────────────────────────────
+
+function renderCennik() {
+  const root = document.getElementById('cennik-editor');
   root.innerHTML = '';
-  data.kategorie.forEach((kat, ki) => {
-    root.appendChild(buildKatBlock(kat, ki));
-  });
+  cennikData.kategorie.forEach((kat, ki) => root.appendChild(buildKatBlock(kat, ki)));
 }
 
 function buildKatBlock(kat, ki) {
@@ -543,43 +331,32 @@ function buildKatBlock(kat, ki) {
 
   const header = document.createElement('div');
   header.className = 'kat-header';
-
   const arrow = document.createElement('span');
   arrow.className = 'kat-arrow';
   arrow.textContent = '▼';
-
   const nameInput = document.createElement('input');
-  nameInput.type = 'text';
-  nameInput.className = 'kat-name-input';
-  nameInput.value = kat.nazwa;
+  nameInput.type = 'text'; nameInput.className = 'kat-name-input'; nameInput.value = kat.nazwa;
   nameInput.addEventListener('click', e => e.stopPropagation());
-  nameInput.addEventListener('change', () => { data.kategorie[ki].nazwa = nameInput.value; });
-
+  nameInput.addEventListener('change', () => { cennikData.kategorie[ki].nazwa = nameInput.value; });
   header.append(arrow, nameInput);
   header.addEventListener('click', () => block.classList.toggle('collapsed'));
 
   const body = document.createElement('div');
   body.className = 'kat-body';
-
   const table = document.createElement('table');
   table.className = 'ztab';
-  table.innerHTML = `<thead><tr>
-    <th>${kat.naglowek || 'Zabieg'}</th>
-    <th>Cena od</th>
-    <th></th>
-  </tr></thead>`;
-
+  table.innerHTML = `<thead><tr><th>${kat.naglowek||'Zabieg'}</th><th>Cena od</th><th></th></tr></thead>`;
   const tbody = document.createElement('tbody');
-  kat.zabiegi.forEach((_, zi) => tbody.appendChild(buildRow(ki, zi)));
+  kat.zabiegi.forEach((_, zi) => tbody.appendChild(buildCennikRow(ki, zi)));
   table.appendChild(tbody);
 
   const addBtn = document.createElement('button');
   addBtn.className = 'add-row-btn';
-  addBtn.textContent = '+ Dodaj zabieg';
+  addBtn.textContent = '+ Dodaj pozycję';
   addBtn.addEventListener('click', () => {
-    data.kategorie[ki].zabiegi.push({ nazwa: 'Nowy zabieg', cena: '—' });
-    const zi = data.kategorie[ki].zabiegi.length - 1;
-    const row = buildRow(ki, zi);
+    cennikData.kategorie[ki].zabiegi.push({ nazwa: 'Nowy zabieg', cena: '—' });
+    const zi = cennikData.kategorie[ki].zabiegi.length - 1;
+    const row = buildCennikRow(ki, zi);
     tbody.appendChild(row);
     row.querySelector('.cell-input').focus();
     row.querySelector('.cell-input').select();
@@ -590,41 +367,112 @@ function buildKatBlock(kat, ki) {
   return block;
 }
 
-function buildRow(ki, zi) {
+function buildCennikRow(ki, zi) {
   const tr = document.createElement('tr');
 
-  const tdNazwa = document.createElement('td');
-  const inNazwa = document.createElement('input');
-  inNazwa.type = 'text';
-  inNazwa.className = 'cell-input';
-  inNazwa.value = data.kategorie[ki].zabiegi[zi].nazwa;
-  inNazwa.addEventListener('change', () => { data.kategorie[ki].zabiegi[zi].nazwa = inNazwa.value; });
-  tdNazwa.appendChild(inNazwa);
+  const tdN = document.createElement('td');
+  const inN = document.createElement('input');
+  inN.type='text'; inN.className='cell-input'; inN.value=cennikData.kategorie[ki].zabiegi[zi].nazwa;
+  inN.addEventListener('change', () => { cennikData.kategorie[ki].zabiegi[zi].nazwa = inN.value; });
+  tdN.appendChild(inN);
 
-  const tdCena = document.createElement('td');
-  tdCena.className = 'td-cena';
-  const inCena = document.createElement('input');
-  inCena.type = 'text';
-  inCena.className = 'cell-input';
-  inCena.value = data.kategorie[ki].zabiegi[zi].cena;
-  inCena.addEventListener('change', () => { data.kategorie[ki].zabiegi[zi].cena = inCena.value; });
-  tdCena.appendChild(inCena);
+  const tdC = document.createElement('td'); tdC.className='td-cena';
+  const inC = document.createElement('input');
+  inC.type='text'; inC.className='cell-input'; inC.value=cennikData.kategorie[ki].zabiegi[zi].cena;
+  inC.addEventListener('change', () => { cennikData.kategorie[ki].zabiegi[zi].cena = inC.value; });
+  tdC.appendChild(inC);
 
-  const tdDel = document.createElement('td');
-  tdDel.className = 'td-del';
-  const btnDel = document.createElement('button');
-  btnDel.className = 'btn-del';
-  btnDel.title = 'Usuń';
-  btnDel.textContent = '×';
-  btnDel.addEventListener('click', () => {
-    data.kategorie[ki].zabiegi.splice(zi, 1);
-    renderEditor();
-  });
-  tdDel.appendChild(btnDel);
+  const tdD = document.createElement('td'); tdD.className='td-del';
+  const btnD = document.createElement('button');
+  btnD.className='btn-icon'; btnD.title='Usuń'; btnD.textContent='×';
+  btnD.addEventListener('click', () => { cennikData.kategorie[ki].zabiegi.splice(zi,1); renderCennik(); });
+  tdD.appendChild(btnD);
 
-  tr.append(tdNazwa, tdCena, tdDel);
+  tr.append(tdN, tdC, tdD);
   return tr;
 }
+
+// ── ZABIEGI EDITOR ─────────────────────────────────────────────────────────
+
+const ICONS_SVG = {
+  laser:'<path d="M24 4v8M24 36v8M4 24h8M36 24h8M10.1 10.1l5.66 5.66M32.24 32.24l5.66 5.66M10.1 37.9l5.66-5.66M32.24 15.76l5.66-5.66"/><circle cx="24" cy="24" r="8"/>',
+  kosm:'<circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="6"/><path d="M24 8v5M24 35v5M8 24h5M35 24h5"/>',
+  mezo:'<path d="M8 40l8-8 4 4 20-24"/><circle cx="36" cy="12" r="4"/>',
+  trycho:'<path d="M24 8c-8 0-14 7-14 14 0 4 2 8 5 10l-3 16h24l-3-16c3-2 5-6 5-10 0-7-6-14-14-14z"/>',
+  wyszcz:'<ellipse cx="24" cy="28" rx="12" ry="14"/><path d="M24 14V6M18 20c-4 2-6 5-6 8M30 20c4 2 6 5 6 8"/>',
+  makijaz:'<path d="M6 42l6-6 28-28-6-6L6 36v6z"/><path d="M12 36l6-6"/>',
+  spa:'<path d="M24 10c0 0-10 8-10 18a10 10 0 0 0 20 0c0-10-10-18-10-18z"/><path d="M14 24c0 0-6 0-8-6 4-2 8 2 8 6zM34 24c0 0 6 0 8-6-4-2-8 2-8 6z"/>',
+  rzes:'<path d="M8 26c0-8.8 7.2-16 16-16s16 7.2 16 16"/><path d="M16 26c0-4.4 3.6-8 8-8s8 3.6 8 8"/><path d="M8 26l-4 8M16 26l-2 10M24 26v10M32 26l2 10M40 26l4 8"/>',
+  manicure:'<path d="M18 8l-4 32h20l-4-32"/><path d="M14 20h20"/><ellipse cx="24" cy="8" rx="6" ry="3"/>',
+  blizny:'<path d="M12 24c0-6.6 5.4-12 12-12"/><path d="M36 24c0 6.6-5.4 12-12 12"/><path d="M24 12v5M24 31v5"/>',
+  men:'<circle cx="22" cy="18" r="10"/><path d="M12 44c0-5.5 4.5-10 10-10"/><path d="M32 8l8-8M34 4h6v6"/>',
+  karta:'<rect x="4" y="12" width="40" height="28" rx="3"/><path d="M4 22h40"/><path d="M12 32h8"/>'
+};
+const DEFAULT_SVG = '<circle cx="24" cy="24" r="10"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4"/>';
+
+function renderZabiegi() {
+  const grid = document.getElementById('zabiegi-editor');
+  grid.innerHTML = '';
+  zabiegiData.zabiegi.forEach((z, i) => grid.appendChild(buildZabCard(z, i)));
+}
+
+function buildZabCard(z, i) {
+  const card = document.createElement('div');
+  card.className = 'zab-card';
+
+  // Image preview / placeholder
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'zab-img-wrap';
+  function updatePreview(url) {
+    imgWrap.innerHTML = '';
+    if (url) {
+      const img = document.createElement('img');
+      img.src = url; img.alt = z.nazwa;
+      img.onerror = () => { updatePreview(''); };
+      imgWrap.appendChild(img);
+    } else {
+      const inner = ICONS_SVG[z.id] || DEFAULT_SVG;
+      imgWrap.innerHTML = `<div class="zab-img-placeholder"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">${inner}</svg></div>`;
+    }
+  }
+  updatePreview(z.zdjecie);
+
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.className = 'zab-del-btn'; delBtn.title = 'Usuń'; delBtn.textContent = '×';
+  delBtn.addEventListener('click', () => { zabiegiData.zabiegi.splice(i,1); renderZabiegi(); });
+
+  // Fields
+  const fields = document.createElement('div');
+  fields.className = 'zab-fields';
+
+  function field(labelText, value, cssClass, onchange) {
+    const wrap = document.createElement('div');
+    const lbl = document.createElement('div'); lbl.className='zab-field-label'; lbl.textContent=labelText;
+    const inp = document.createElement('input');
+    inp.type='text'; inp.className=`zab-input ${cssClass||''}`; inp.value=value;
+    inp.addEventListener('change', () => { onchange(inp.value); });
+    wrap.append(lbl, inp);
+    return { wrap, inp };
+  }
+
+  const { wrap: wN, inp: inN } = field('Nazwa zabiegu', z.nazwa, '', v => { zabiegiData.zabiegi[i].nazwa=v; });
+  const { wrap: wO }           = field('Krótki opis',   z.opis,  'opis', v => { zabiegiData.zabiegi[i].opis=v; });
+  const { wrap: wZ, inp: inZ } = field('Link do zdjęcia (URL)', z.zdjecie, 'url', v => {
+    zabiegiData.zabiegi[i].zdjecie = v;
+    updatePreview(v);
+  });
+
+  fields.append(wN, wO, wZ);
+  card.append(imgWrap, delBtn, fields);
+  return card;
+}
+
+document.getElementById('add-zabieg-btn').addEventListener('click', () => {
+  zabiegiData.zabiegi.push({ id: 'nowy_' + Date.now(), nazwa: 'Nowy zabieg', opis: 'Opis zabiegu', zdjecie: '' });
+  renderZabiegi();
+  document.getElementById('zabiegi-editor').lastElementChild?.querySelector('.zab-input')?.focus();
+});
 
 // ── SAVE ───────────────────────────────────────────────────────────────────
 
@@ -632,20 +480,23 @@ document.getElementById('save-btn').addEventListener('click', async () => {
   document.activeElement?.blur();
   const btn = document.getElementById('save-btn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Zapisywanie…';
+  btn.innerHTML = '<span class="spinner"></span>';
   setStatus('');
 
   try {
-    await saveCennik(data);
-    setStatus('Zapisano ✓', 'ok');
-    btn.textContent = 'Zapisz cennik';
-    btn.disabled = false;
-    setTimeout(() => setStatus(''), 4000);
-  } catch (e) {
+    if (activeTab === 'cennik') {
+      cennikSHA = await ghPut('cennik.json', cennikSHA, cennikData, 'Aktualizacja cennika');
+      setStatus('Cennik zapisany ✓', 'ok');
+    } else {
+      zabiegiSHA = await ghPut('zabiegi.json', zabiegiSHA, zabiegiData, 'Aktualizacja zabiegów');
+      setStatus('Zabiegi zapisane ✓', 'ok');
+    }
+  } catch(e) {
     setStatus(`Błąd: ${e.message}`, 'err');
-    btn.textContent = 'Zapisz cennik';
-    btn.disabled = false;
   }
+
+  btn.textContent = activeTab === 'cennik' ? 'Zapisz cennik' : 'Zapisz zabiegi';
+  btn.disabled = false;
 });
 </script>
 </body>

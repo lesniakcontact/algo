@@ -1,0 +1,16 @@
+{
+  "zabiegi": [
+    { "id": "laser",   "nazwa": "Pielęgnacja twarzy",     "opis": "Oczyszczanie, nawilżanie, peelingi — dobrane indywidualnie.",                    "zdjecie": "" },
+    { "id": "kosm",    "nazwa": "Kosmetologia",            "opis": "Odmładzanie, usuwanie zmarszczek, peelingi medyczne.",                            "zdjecie": "" },
+    { "id": "mezo",    "nazwa": "Mezoterapie",             "opis": "Dermapen, mezoterapia mikroigłowa, ThermoFraxel.",                                "zdjecie": "" },
+    { "id": "trycho",  "nazwa": "Trychologia",             "opis": "Stop łysieniu — Hair Filler, mezoterapia włosów.",                                "zdjecie": "" },
+    { "id": "wyszcz",  "nazwa": "Zabiegi wyszczuplające",  "opis": "LipoLaser, presoterapia BOA, dermologica, liposukcja IR.",                        "zdjecie": "" },
+    { "id": "makijaz", "nazwa": "Makijaż permanentny",     "opis": "Long Time Liner — Ombre, Pudrowa, Piórkowa, Microblending.",                      "zdjecie": "" },
+    { "id": "spa",     "nazwa": "Day Spa & Masaże",        "opis": "Pakiety relaksacyjne, masaż Kobido, pakiety ślubne.",                             "zdjecie": "" },
+    { "id": "rzes",    "nazwa": "Przedłużanie rzęs",       "opis": "Metoda 1:1, objętościowa, lifting, laminacja, botulina.",                         "zdjecie": "" },
+    { "id": "manicure","nazwa": "Manicure & Pedicure",     "opis": "Stylizacja paznokci, żel, hybrydy, odmładzanie dłoni.",                          "zdjecie": "" },
+    { "id": "blizny",  "nazwa": "Usuwanie blizn",          "opis": "Skuteczne metody laserowe i mezoterapii dla blizn i rozstępów.",                  "zdjecie": "" },
+    { "id": "men",     "nazwa": "Zabiegi dla mężczyzn",    "opis": "Laserowe usuwanie naczynek, trądziku, owłosienia, odmładzanie.",                  "zdjecie": "" },
+    { "id": "karta",   "nazwa": "Karta podarunkowa",       "opis": "Idealny prezent — dowolna kwota, ważna 12 miesięcy.",                             "zdjecie": "" }
+  ]
+}
