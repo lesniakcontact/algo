@@ -7,31 +7,27 @@
       "zabiegi": [
         {
           "nazwa": "Laserowe usuwanie owłosienia (IPL)",
-          "cena": "—69"
+          "cena": "—"
         },
         {
           "nazwa": "Zabiegi antytrądzikowe i regulujące",
-          "cena": "—69"
+          "cena": "—"
         },
         {
           "nazwa": "Peeling chemiczny i enzymatyczny",
-          "cena": "—4"
+          "cena": "—"
         },
         {
           "nazwa": "Pielęgnacja skóry dojrzałej i wrażliwej",
-          "cena": "—4"
+          "cena": "—"
         },
         {
           "nazwa": "Usuwanie przebarwień i plam pigmentacyjnych",
-          "cena": "—4"
+          "cena": "—"
         },
         {
           "nazwa": "Laserowy peeling węglowy Black Doll",
-          "cena": "—3"
-        },
-        {
-          "nazwa": "Nowy zabieg",
-          "cena": "—3"
+          "cena": "—"
         }
       ]
     },
@@ -46,7 +42,7 @@
         },
         {
           "nazwa": "Leczenie trądziku — oczyszczanie manualne",
-          "cena": "3—3"
+          "cena": "—"
         },
         {
           "nazwa": "Redukcja przebarwień i blizn potrądzikowych",
@@ -85,7 +81,7 @@
         },
         {
           "nazwa": "ThermoFraxel (mikroigły + fale radiowe)",
-          "cena": "—3"
+          "cena": "—"
         }
       ]
     },
@@ -135,7 +131,7 @@
         },
         {
           "nazwa": "Tlenoterapia hiperbaryczna",
-          "cena": "3—"
+          "cena": "—"
         }
       ]
     },
