@@ -14,29 +14,35 @@ collections:
         file: "cennik.json"
         format: json
         fields:
-          - label: "Kategorie"
+          - label: "Kategorie zabiegów"
             name: "kategorie"
             widget: "list"
-            label_singular: "Kategoria"
+            label_singular: "Kategorię"
+            allow_add: true
+            collapsed: false
+            summary: "{{fields.nazwa}}"
             fields:
-              - label: "ID (nie zmieniaj)"
+              - label: "ID techniczny (nie zmieniaj)"
                 name: "id"
                 widget: "string"
-                hint: "Identyfikator techniczny — np. laser, kos, mez. Nie zmieniaj."
-              - label: "Nazwa kategorii"
+                hint: "Identyfikator używany przez stronę, np. laser, kos, mez. Nie zmieniaj!"
+              - label: "Nazwa zakładki"
                 name: "nazwa"
                 widget: "string"
-              - label: "Nagłówek tabeli"
+              - label: "Nagłówek kolumny"
                 name: "naglowek"
                 widget: "select"
                 options:
                   - { label: "Zabieg", value: "Zabieg" }
                   - { label: "Pakiet", value: "Pakiet" }
                 default: "Zabieg"
-              - label: "Zabiegi"
+              - label: "Zabiegi w tej kategorii"
                 name: "zabiegi"
                 widget: "list"
                 label_singular: "Zabieg"
+                allow_add: true
+                collapsed: true
+                summary: "{{fields.nazwa}} — {{fields.cena}} zł"
                 fields:
                   - label: "Nazwa zabiegu"
                     name: "nazwa"
@@ -44,4 +50,9 @@ collections:
                   - label: "Cena (zł)"
                     name: "cena"
                     widget: "string"
-                    hint: "Sama liczba lub zakres, np. 150 lub 150–250 (bez słowa zł)"
+                    hint: "Sama liczba lub zakres, np. 150 lub 150–250. Bez słowa zł."
+                  - label: "Dodatkowy opis"
+                    name: "opis"
+                    widget: "text"
+                    required: false
+                    hint: "Opcjonalny — widoczny pod nazwą zabiegu w cenniku."

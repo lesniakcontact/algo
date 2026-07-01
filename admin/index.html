@@ -8,5 +8,50 @@
 <body>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    CMS.registerPreviewStyle('/admin/preview.css');
+
+    var CennikPreview = function(props) {
+      var entry = props.entry;
+      var kategorie = entry.getIn(['data', 'kategorie']);
+      if (!kategorie) {
+        return h('p', { style: { color: 'rgba(245,232,192,.4)', padding: '20px', fontStyle: 'italic' } }, 'Brak danych do podglądu.');
+      }
+      var kat = kategorie.toJS ? kategorie.toJS() : [];
+
+      return h('div', {},
+        h('div', { className: 'preview-title' }, 'Podgląd cennika — ALGO'),
+        kat.map(function(k, i) {
+          var zabiegi = k.zabiegi || [];
+          return h('div', { key: i, className: 'kat-block' },
+            h('div', { className: 'kat-name' }, k.nazwa || '—'),
+            h('table', {},
+              h('thead', {},
+                h('tr', {},
+                  h('th', {}, k.naglowek || 'Zabieg'),
+                  h('th', {}, 'Cena od')
+                )
+              ),
+              h('tbody', {},
+                zabiegi.length === 0
+                  ? h('tr', {}, h('td', { className: 'empty', colSpan: 2 }, 'Brak zabiegów w tej kategorii'))
+                  : zabiegi.map(function(z, j) {
+                      return h('tr', { key: j },
+                        h('td', {},
+                          z.nazwa || '—',
+                          z.opis ? h('span', { className: 'zabieg-opis' }, z.opis) : null
+                        ),
+                        h('td', {}, z.cena ? z.cena + ' zł' : '—')
+                      );
+                    })
+              )
+            )
+          );
+        })
+      );
+    };
+
+    CMS.registerPreviewTemplate('cennik', CennikPreview);
+  </script>
 </body>
 </html>
