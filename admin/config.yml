@@ -14,45 +14,33 @@ collections:
         file: "cennik.json"
         format: json
         fields:
-          - label: "Kategorie zabiegów"
+          - label: "Kategorie"
             name: "kategorie"
             widget: "list"
             label_singular: "Kategorię"
-            allow_add: true
+            allow_add: false
             collapsed: false
             summary: "{{fields.nazwa}}"
             fields:
-              - label: "ID techniczny (nie zmieniaj)"
-                name: "id"
-                widget: "string"
-                hint: "Identyfikator używany przez stronę, np. laser, kos, mez. Nie zmieniaj!"
+              - name: "id"
+                widget: "hidden"
+              - name: "naglowek"
+                widget: "hidden"
               - label: "Nazwa zakładki"
                 name: "nazwa"
                 widget: "string"
-              - label: "Nagłówek kolumny"
-                name: "naglowek"
-                widget: "select"
-                options:
-                  - { label: "Zabieg", value: "Zabieg" }
-                  - { label: "Pakiet", value: "Pakiet" }
-                default: "Zabieg"
-              - label: "Zabiegi w tej kategorii"
+              - label: "Zabiegi"
                 name: "zabiegi"
                 widget: "list"
                 label_singular: "Zabieg"
                 allow_add: true
                 collapsed: true
-                summary: "{{fields.nazwa}} — {{fields.cena}} zł"
+                summary: "{{fields.nazwa}} — {{fields.cena}}"
                 fields:
                   - label: "Nazwa zabiegu"
                     name: "nazwa"
                     widget: "string"
-                  - label: "Cena (zł)"
+                  - label: "Cena"
                     name: "cena"
                     widget: "string"
-                    hint: "Sama liczba lub zakres, np. 150 lub 150–250. Bez słowa zł."
-                  - label: "Dodatkowy opis"
-                    name: "opis"
-                    widget: "text"
-                    required: false
-                    hint: "Opcjonalny — widoczny pod nazwą zabiegu w cenniku."
+                    hint: "np. od 150 zł lub 150–250 zł"

@@ -1257,6 +1257,13 @@ function initGallerySwiper(){
 }
 
 /* ═══ CENNIK — FETCH & RENDER ═══════════════════════════ */
+function spcDyn(i,btn){
+  document.querySelectorAll('#cennik-root .ptw').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#cennik-root .pcb').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('pl-cat-'+i);
+  if(el)el.classList.add('active');
+  if(btn)btn.classList.add('active');
+}
 (function loadCennik(){
   fetch('cennik.json')
     .then(r=>r.json())
@@ -1264,13 +1271,13 @@ function initGallerySwiper(){
       const root=document.getElementById('cennik-root');
       if(!root||!data.kategorie||!data.kategorie.length)return;
       const cats=data.kategorie.map((k,i)=>
-        `<button class="pcb${i===0?' active':''}" onclick="spc('${k.id}',this)">${k.nazwa}</button>`
+        `<button class="pcb${i===0?' active':''}" onclick="spcDyn(${i},this)">${k.nazwa}</button>`
       ).join('');
       const tables=data.kategorie.map((k,i)=>{
         const rows=k.zabiegi&&k.zabiegi.length
-          ?k.zabiegi.map(z=>`<tr><td>${z.nazwa}</td><td>${z.cena} zł</td></tr>`).join('')
+          ?k.zabiegi.map(z=>`<tr><td>${z.nazwa||'—'}</td><td>${z.cena||'—'}</td></tr>`).join('')
           :'<tr><td colspan="2" style="text-align:center;opacity:.4;font-style:italic;padding:18px 0">Cennik w przygotowaniu</td></tr>';
-        return `<div class="ptw${i===0?' active':''}" id="pl-${k.id}"><table class="ptab"><thead><tr><th>${k.naglowek||'Zabieg'}</th><th>Cena od</th></tr></thead><tbody>${rows}</tbody></table><p class="pnote">Skontaktuj się z nami: 18 352 25 64</p></div>`;
+        return `<div class="ptw${i===0?' active':''}" id="pl-cat-${i}"><table class="ptab"><thead><tr><th>${k.naglowek||'Zabieg'}</th><th>Cena od</th></tr></thead><tbody>${rows}</tbody></table><p class="pnote">Skontaktuj się z nami: 18 352 25 64</p></div>`;
       }).join('');
       root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
     })

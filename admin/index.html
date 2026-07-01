@@ -15,39 +15,46 @@
       var entry = props.entry;
       var kategorie = entry.getIn(['data', 'kategorie']);
       if (!kategorie) {
-        return h('p', { style: { color: 'rgba(245,232,192,.4)', padding: '20px', fontStyle: 'italic' } }, 'Brak danych do podglądu.');
+        return h('p', { style: { color: 'rgba(245,232,192,.4)', padding: '20px', fontStyle: 'italic' } },
+          'Zapisz zmiany, aby zobaczyć podgląd.');
       }
       var kat = kategorie.toJS ? kategorie.toJS() : [];
+      var activeIdx = 0;
 
       return h('div', {},
-        h('div', { className: 'preview-title' }, 'Podgląd cennika — ALGO'),
-        kat.map(function(k, i) {
-          var zabiegi = k.zabiegi || [];
-          return h('div', { key: i, className: 'kat-block' },
-            h('div', { className: 'kat-name' }, k.nazwa || '—'),
-            h('table', {},
-              h('thead', {},
-                h('tr', {},
-                  h('th', {}, k.naglowek || 'Zabieg'),
-                  h('th', {}, 'Cena od')
-                )
-              ),
-              h('tbody', {},
-                zabiegi.length === 0
-                  ? h('tr', {}, h('td', { className: 'empty', colSpan: 2 }, 'Brak zabiegów w tej kategorii'))
-                  : zabiegi.map(function(z, j) {
-                      return h('tr', { key: j },
-                        h('td', {},
-                          z.nazwa || '—',
-                          z.opis ? h('span', { className: 'zabieg-opis' }, z.opis) : null
-                        ),
-                        h('td', {}, z.cena ? z.cena + ' zł' : '—')
-                      );
-                    })
+        // Category tabs
+        h('div', { className: 'pcats' },
+          kat.map(function(k, i) {
+            return h('div', { key: i, className: 'pcb' + (i === activeIdx ? ' active' : '') }, k.nazwa || '—');
+          })
+        ),
+        // Active category table
+        kat.length > 0 && h('div', {},
+          h('div', { className: 'cat-label' }, kat[activeIdx] ? kat[activeIdx].nazwa : ''),
+          h('table', { className: 'ptab' },
+            h('thead', {},
+              h('tr', {},
+                h('th', {}, (kat[activeIdx] && kat[activeIdx].naglowek) || 'Zabieg'),
+                h('th', {}, 'Cena od')
               )
+            ),
+            h('tbody', {},
+              (function() {
+                var zabiegi = (kat[activeIdx] && kat[activeIdx].zabiegi) || [];
+                if (!zabiegi.length) {
+                  return h('tr', {}, h('td', { className: 'empty', colSpan: 2 }, 'Brak zabiegów — dodaj pierwszy zabieg po lewej.'));
+                }
+                return zabiegi.map(function(z, j) {
+                  return h('tr', { key: j },
+                    h('td', {}, z.nazwa || '—'),
+                    h('td', {}, z.cena || '—')
+                  );
+                });
+              })()
             )
-          );
-        })
+          ),
+          h('p', { className: 'pnote' }, 'Skontaktuj się z nami: 18 352 25 64')
+        )
       );
     };
 
