@@ -139,8 +139,8 @@
   <div class="login-box">
     <div class="login-logo">ALGO</div>
     <div class="login-sub">Panel Administratora</div>
-    <label for="pwd-input">Hasło</label>
-    <input type="password" id="pwd-input" autocomplete="current-password" />
+    <label for="pwd-input">Token dostępu (GitHub PAT)</label>
+    <input type="password" id="pwd-input" autocomplete="off" placeholder="ghp_…" />
     <button class="btn-gold" id="login-btn">Zaloguj</button>
     <div id="login-error"></div>
   </div>
@@ -183,9 +183,6 @@
 <script>
 const REPO = 'lesniakcontact/algo';
 const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
-const _a = ['***REMOVED***', '***REMOVED***', '***REMOVED***'];
-const _k = () => _a.join('');
-
 // State
 let cennikSHA = '', cennikData = null;
 let zabiegiSHA = '', zabiegiData = null;
@@ -204,7 +201,7 @@ function setStatus(msg, type='') {
 }
 
 function headers() {
-  return { Authorization: `Bearer ${_k()}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+  return { Authorization: `Bearer ${sessionStorage.getItem('algo_pat')}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
 }
 
 async function ghGet(file) {
@@ -226,43 +223,32 @@ async function ghPut(file, sha, data, msg) {
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 
-async function checkPassword(pwd) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('') === '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
-}
-
 document.getElementById('login-btn').addEventListener('click', doLogin);
 document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 
 async function doLogin() {
-  const pwd = document.getElementById('pwd-input').value;
-  if (!pwd) return;
+  const pat = document.getElementById('pwd-input').value.trim();
+  if (!pat) return;
   const btn = document.getElementById('login-btn');
   const errEl = document.getElementById('login-error');
   errEl.textContent = '';
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
-  if (!await checkPassword(pwd)) {
-    errEl.textContent = 'Nieprawidłowe hasło';
-    btn.disabled = false;
-    btn.textContent = 'Zaloguj';
-    return;
-  }
-
+  sessionStorage.setItem('algo_pat', pat);
   try {
     await loadAllData();
-    sessionStorage.setItem('algo_auth', '1');
     showPanel();
   } catch(e) {
-    errEl.textContent = `Błąd połączenia: ${e.message}`;
+    sessionStorage.removeItem('algo_pat');
+    errEl.textContent = `Nieprawidłowy token lub błąd połączenia`;
     btn.disabled = false;
     btn.textContent = 'Zaloguj';
   }
 }
 
 document.getElementById('logout-btn').addEventListener('click', () => {
-  sessionStorage.removeItem('algo_auth');
+  sessionStorage.removeItem('algo_pat');
   cennikData = null; cennikSHA = '';
   zabiegiData = null; zabiegiSHA = '';
   document.getElementById('pwd-input').value = '';
@@ -271,7 +257,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  if (sessionStorage.getItem('algo_auth') === '1') {
+  if (sessionStorage.getItem('algo_pat')) {
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
@@ -279,7 +265,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       await loadAllData();
       showPanel();
     } catch {
-      sessionStorage.removeItem('algo_auth');
+      sessionStorage.removeItem('algo_pat');
       btn.disabled = false;
       btn.textContent = 'Zaloguj';
     }
