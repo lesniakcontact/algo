@@ -1375,9 +1375,12 @@ function spcDyn(i,btn){
     root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
   }
 
-  const RAW='https://raw.githubusercontent.com/lesniakcontact/algo/main/';
+  const GH_API='https://api.github.com/repos/lesniakcontact/algo/contents/';
+  function b64d(s){return decodeURIComponent(escape(atob(s)));}
   function fetchJSON(file){
-    return fetch(RAW+file+'?_='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+    return fetch(GH_API+file,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}})
+      .then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(j=>JSON.parse(b64d(j.content.replace(/\n/g,''))));
   }
 
   fetchJSON('zabiegi.json').then(d=>{lastZabiegiJSON=JSON.stringify(d);renderZabiegi(d);}).catch(()=>{});
@@ -1389,7 +1392,7 @@ function spcDyn(i,btn){
   setInterval(function(){
     fetchJSON('cennik.json').then(d=>{const j=JSON.stringify(d);if(j!==lastCennikJSON){lastCennikJSON=j;renderCennik(d);}}).catch(()=>{});
     fetchJSON('zabiegi.json').then(d=>{const j=JSON.stringify(d);if(j!==lastZabiegiJSON){lastZabiegiJSON=j;renderZabiegi(d);}}).catch(()=>{});
-  },5000);
+  },120000);
 })();
 </script>
 
