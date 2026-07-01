@@ -846,14 +846,17 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
 
 <footer>
   <button class="fl" onclick="sp('home')" style="background:none;border:none;cursor:none;padding:0;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:#FFFFFF;text-transform:uppercase;text-align:left;line-height:1.1">ALGO<span style="display:block;font-weight:300;font-size:9px;letter-spacing:5px;color:var(--gold);margin-top:3px;font-family:'Jost',sans-serif;text-transform:uppercase">Gabinet Kosmetyczny</span></button>
-  <div class="fls">
-    <button onclick="sp('home')">Start</button>
-    <button onclick="sp('zabiegi')">Zabiegi</button>
-    <button onclick="sp('onas')">O nas</button>
-    <button onclick="sp('cennik')">Cennik</button>
-    <button onclick="sp('kontakt')">Kontakt</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+    <div class="fls">
+      <button onclick="sp('home')">Start</button>
+      <button onclick="sp('zabiegi')">Zabiegi</button>
+      <button onclick="sp('onas')">O nas</button>
+      <button onclick="sp('cennik')">Cennik</button>
+      <button onclick="sp('kontakt')">Kontakt</button>
+    </div>
+    <div style="font-size:9.5px;color:rgba(255,253,249,.3);letter-spacing:1px">Stworzone przez: <a href="https://gloweb.pl/" target="_blank" rel="noopener" style="color:rgba(255,253,249,.4);text-decoration:underline;text-underline-offset:3px">Gloweb</a></div>
   </div>
-  <div class="fcp" style="text-align:right">© 2026 Algo. Gabinet Kosmetyczny · Gorlice<br><span style="margin-top:4px;display:block">Stworzone przez: <a href="https://gloweb.pl/" target="_blank" rel="noopener" style="color:rgba(255,253,249,.4);text-decoration:underline;text-underline-offset:3px">gloweb.pl</a></span></div>
+  <div class="fcp" style="text-align:right">© 2026 Algo. Gabinet Kosmetyczny · Gorlice</div>
 </footer>
 
 <!-- MODAL -->
