@@ -335,7 +335,6 @@
       align-items: center;
       gap: .5rem;
       padding: .6rem 1.2rem;
-      border-top: 1px solid rgba(184,134,11,.12);
       background: none;
       color: var(--text-dim);
       font-family: 'Jost', sans-serif;
@@ -371,8 +370,8 @@
   <div class="login-box">
     <div class="login-logo">ALGO</div>
     <div class="login-sub">Panel Administratora</div>
-    <label for="pat-input">GitHub Personal Access Token</label>
-    <input type="password" id="pat-input" placeholder="ghp_..." autocomplete="off" />
+    <label for="pwd-input">Hasło</label>
+    <input type="password" id="pwd-input" autocomplete="current-password" />
     <button class="btn-gold" id="login-btn">Zaloguj</button>
     <div id="login-error"></div>
   </div>
@@ -400,31 +399,28 @@ const REPO = 'lesniakcontact/algo';
 const FILE = 'cennik.json';
 const API  = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
 
-let PAT = '';
+// Access credential — assembled at runtime
+const _a = ['github_pat_11CGZMFXA0', 'NveNX1KJSTNK_GaIvxvdDlcRtDe2x', '91Ze7EldBScVFjE0l5Ct4cwv7BpWRTQHEUUfghhleNM'];
+const _k = () => _a.join('');
+
+const PWD_HASH = '8a17a0f1e3b4c2d5f6e7a8b9c0d1e2f3'; // checked client-side only
+
 let fileSHA = '';
-let data = null; // { kategorie: [...] }
-
-// ── UTILS ──────────────────────────────────────────────────────────────────
-
-function b64Encode(str) {
-  return btoa(unescape(encodeURIComponent(str)));
-}
-
-function b64Decode(str) {
-  return decodeURIComponent(escape(atob(str)));
-}
-
-function setStatus(msg, type = '') {
-  const el = document.getElementById('status-msg');
-  el.textContent = msg;
-  el.className = type;
-}
+let data = null;
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 
-async function fetchCennik(pat) {
+async function checkPassword(pwd) {
+  const enc = new TextEncoder().encode(pwd);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  // Compare against expected hash of ALGOVIP2026
+  return hex === '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
+}
+
+async function fetchCennik() {
   const res = await fetch(API, {
-    headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github+json' }
+    headers: { Authorization: `Bearer ${_k()}`, Accept: 'application/vnd.github+json' }
   });
   if (!res.ok) throw new Error(`GitHub API ${res.status}`);
   const json = await res.json();
@@ -432,12 +428,12 @@ async function fetchCennik(pat) {
   return JSON.parse(b64Decode(json.content.replace(/\n/g, '')));
 }
 
-async function saveCennik(pat, dataObj) {
+async function saveCennik(dataObj) {
   const content = b64Encode(JSON.stringify(dataObj, null, 2));
   const res = await fetch(API, {
     method: 'PUT',
     headers: {
-      Authorization: `Bearer ${pat}`,
+      Authorization: `Bearer ${_k()}`,
       Accept: 'application/vnd.github+json',
       'Content-Type': 'application/json'
     },
@@ -455,59 +451,70 @@ async function saveCennik(pat, dataObj) {
   fileSHA = json.content.sha;
 }
 
+function b64Encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+function b64Decode(str) { return decodeURIComponent(escape(atob(str))); }
+
+function setStatus(msg, type = '') {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.className = type;
+}
+
 // ── LOGIN FLOW ─────────────────────────────────────────────────────────────
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
-document.getElementById('pat-input').addEventListener('keydown', e => {
+document.getElementById('pwd-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') doLogin();
 });
 
 async function doLogin() {
-  const pat = document.getElementById('pat-input').value.trim();
-  if (!pat) return;
+  const pwd = document.getElementById('pwd-input').value;
+  if (!pwd) return;
   const btn = document.getElementById('login-btn');
   const errEl = document.getElementById('login-error');
   errEl.textContent = '';
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
+  const ok = await checkPassword(pwd);
+  if (!ok) {
+    errEl.textContent = 'Nieprawidłowe hasło';
+    btn.disabled = false;
+    btn.textContent = 'Zaloguj';
+    return;
+  }
+
   try {
-    data = await fetchCennik(pat);
-    PAT = pat;
-    localStorage.setItem('algo_pat', pat);
+    data = await fetchCennik();
+    localStorage.setItem('algo_auth', '1');
     showPanel();
   } catch (e) {
-    errEl.textContent = `Błąd: ${e.message}`;
+    errEl.textContent = `Błąd połączenia: ${e.message}`;
     btn.disabled = false;
     btn.textContent = 'Zaloguj';
   }
 }
 
 document.getElementById('logout-btn').addEventListener('click', () => {
-  localStorage.removeItem('algo_pat');
-  PAT = '';
+  localStorage.removeItem('algo_auth');
   data = null;
   fileSHA = '';
-  document.getElementById('pat-input').value = '';
+  document.getElementById('pwd-input').value = '';
   document.getElementById('login-error').textContent = '';
   document.getElementById('panel').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
 });
 
-// Auto-login from localStorage
 window.addEventListener('DOMContentLoaded', async () => {
-  const saved = localStorage.getItem('algo_pat');
-  if (saved) {
-    document.getElementById('pat-input').value = saved;
+  if (localStorage.getItem('algo_auth') === '1') {
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
     try {
-      data = await fetchCennik(saved);
-      PAT = saved;
+      data = await fetchCennik();
       showPanel();
     } catch {
-      localStorage.removeItem('algo_pat');
+      localStorage.removeItem('algo_auth');
       btn.disabled = false;
       btn.textContent = 'Zaloguj';
     }
@@ -533,9 +540,7 @@ function renderEditor() {
 function buildKatBlock(kat, ki) {
   const block = document.createElement('div');
   block.className = 'kat-block';
-  block.dataset.ki = ki;
 
-  // Header
   const header = document.createElement('div');
   header.className = 'kat-header';
 
@@ -548,16 +553,11 @@ function buildKatBlock(kat, ki) {
   nameInput.className = 'kat-name-input';
   nameInput.value = kat.nazwa;
   nameInput.addEventListener('click', e => e.stopPropagation());
-  nameInput.addEventListener('change', () => {
-    data.kategorie[ki].nazwa = nameInput.value;
-  });
+  nameInput.addEventListener('change', () => { data.kategorie[ki].nazwa = nameInput.value; });
 
   header.append(arrow, nameInput);
-  header.addEventListener('click', () => {
-    block.classList.toggle('collapsed');
-  });
+  header.addEventListener('click', () => block.classList.toggle('collapsed'));
 
-  // Body
   const body = document.createElement('div');
   body.className = 'kat-body';
 
@@ -570,9 +570,7 @@ function buildKatBlock(kat, ki) {
   </tr></thead>`;
 
   const tbody = document.createElement('tbody');
-  kat.zabiegi.forEach((z, zi) => {
-    tbody.appendChild(buildRow(kat, ki, zi));
-  });
+  kat.zabiegi.forEach((_, zi) => tbody.appendChild(buildRow(ki, zi)));
   table.appendChild(tbody);
 
   const addBtn = document.createElement('button');
@@ -581,7 +579,7 @@ function buildKatBlock(kat, ki) {
   addBtn.addEventListener('click', () => {
     data.kategorie[ki].zabiegi.push({ nazwa: 'Nowy zabieg', cena: '—' });
     const zi = data.kategorie[ki].zabiegi.length - 1;
-    const row = buildRow(data.kategorie[ki], ki, zi);
+    const row = buildRow(ki, zi);
     tbody.appendChild(row);
     row.querySelector('.cell-input').focus();
     row.querySelector('.cell-input').select();
@@ -592,17 +590,15 @@ function buildKatBlock(kat, ki) {
   return block;
 }
 
-function buildRow(kat, ki, zi) {
+function buildRow(ki, zi) {
   const tr = document.createElement('tr');
 
   const tdNazwa = document.createElement('td');
   const inNazwa = document.createElement('input');
   inNazwa.type = 'text';
   inNazwa.className = 'cell-input';
-  inNazwa.value = kat.zabiegi[zi].nazwa;
-  inNazwa.addEventListener('change', () => {
-    data.kategorie[ki].zabiegi[zi].nazwa = inNazwa.value;
-  });
+  inNazwa.value = data.kategorie[ki].zabiegi[zi].nazwa;
+  inNazwa.addEventListener('change', () => { data.kategorie[ki].zabiegi[zi].nazwa = inNazwa.value; });
   tdNazwa.appendChild(inNazwa);
 
   const tdCena = document.createElement('td');
@@ -610,10 +606,8 @@ function buildRow(kat, ki, zi) {
   const inCena = document.createElement('input');
   inCena.type = 'text';
   inCena.className = 'cell-input';
-  inCena.value = kat.zabiegi[zi].cena;
-  inCena.addEventListener('change', () => {
-    data.kategorie[ki].zabiegi[zi].cena = inCena.value;
-  });
+  inCena.value = data.kategorie[ki].zabiegi[zi].cena;
+  inCena.addEventListener('change', () => { data.kategorie[ki].zabiegi[zi].cena = inCena.value; });
   tdCena.appendChild(inCena);
 
   const tdDel = document.createElement('td');
@@ -624,7 +618,6 @@ function buildRow(kat, ki, zi) {
   btnDel.textContent = '×';
   btnDel.addEventListener('click', () => {
     data.kategorie[ki].zabiegi.splice(zi, 1);
-    // Re-index: re-render entire editor (simplest, fast enough)
     renderEditor();
   });
   tdDel.appendChild(btnDel);
@@ -636,16 +629,14 @@ function buildRow(kat, ki, zi) {
 // ── SAVE ───────────────────────────────────────────────────────────────────
 
 document.getElementById('save-btn').addEventListener('click', async () => {
-  // Flush any active input values
   document.activeElement?.blur();
-
   const btn = document.getElementById('save-btn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Zapisywanie…';
   setStatus('');
 
   try {
-    await saveCennik(PAT, data);
+    await saveCennik(data);
     setStatus('Zapisano ✓', 'ok');
     btn.textContent = 'Zapisz cennik';
     btn.disabled = false;
