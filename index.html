@@ -1325,7 +1325,7 @@ function spcDyn(i,btn){
   if(el)el.classList.add('active');
   if(btn)btn.classList.add('active');
 }
-(function loadZabiegi(){
+(function initDynamicData(){
   const ICONS={
     laser:'<path d="M24 4v8M24 36v8M4 24h8M36 24h8M10.1 10.1l5.66 5.66M32.24 32.24l5.66 5.66M10.1 37.9l5.66-5.66M32.24 15.76l5.66-5.66"/><circle cx="24" cy="24" r="8"/>',
     kosm:'<circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="6"/><path d="M24 8v5M24 35v5M8 24h5M35 24h5"/>',
@@ -1341,44 +1341,54 @@ function spcDyn(i,btn){
     karta:'<rect x="4" y="12" width="40" height="28" rx="3"/><path d="M4 22h40"/><path d="M12 32h8"/>'
   };
   const DEFAULT='<circle cx="24" cy="24" r="10"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4"/>';
-  fetch('zabiegi.json')
-    .then(r=>r.json())
-    .then(data=>{
-      const grid=document.getElementById('zabiegi-grid');
-      if(!grid||!data.zabiegi)return;
-      grid.innerHTML=data.zabiegi.map((z,i)=>{
-        const delay=((i*0.05)+0.05).toFixed(2);
-        const media=z.zdjecie
-          ?`<img src="${z.zdjecie}" style="width:38px;height:38px;object-fit:cover;margin-bottom:18px;opacity:.7" alt="${z.nazwa} — salon beauty Gorlice">`
-          :`<svg class="si2" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">${ICONS[z.id]||DEFAULT}</svg>`;
-        return `<button class="sc sr" style="transition-delay:${delay}s" onclick="om('${z.id}')">${media}<div class="sn2">${z.nazwa}</div><div class="sd2">${z.opis}</div><span class="sa">Więcej →</span></button>`;
-      }).join('');
-      if(window._srObs)grid.querySelectorAll('.sr').forEach(el=>window._srObs.observe(el));
-    })
-    .catch(()=>{});
-})();
 
-(function loadCennik(){
-  fetch('cennik.json')
-    .then(r=>r.json())
-    .then(data=>{
-      const root=document.getElementById('cennik-root');
-      if(!root||!data.kategorie||!data.kategorie.length)return;
-      const cats=data.kategorie.map((k,i)=>
-        `<button class="pcb${i===0?' active':''}" onclick="spcDyn(${i},this)">${k.nazwa}</button>`
-      ).join('');
-      const tables=data.kategorie.map((k,i)=>{
-        const rows=k.zabiegi&&k.zabiegi.length
-          ?k.zabiegi.map(z=>`<tr><td>${z.nazwa||'—'}</td><td>${z.cena||'—'}</td></tr>`).join('')
-          :'<tr><td colspan="2" style="text-align:center;opacity:.4;font-style:italic;padding:18px 0">Cennik w przygotowaniu</td></tr>';
-        return `<div class="ptw${i===0?' active':''}" id="pl-cat-${i}"><table class="ptab"><thead><tr><th>${k.naglowek||'Zabieg'}</th><th>Cena od</th></tr></thead><tbody>${rows}</tbody></table><p class="pnote">Skontaktuj się z nami: 18 352 25 64</p></div>`;
-      }).join('');
-      root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
-    })
-    .catch(()=>{
-      const root=document.getElementById('cennik-root');
-      if(root)root.innerHTML='<p class="pnote" style="padding:40px 0;text-align:center">Prosimy o kontakt telefoniczny: 18 352 25 64</p>';
-    });
+  let lastCennikJSON='', lastZabiegiJSON='';
+
+  function renderZabiegi(data){
+    const grid=document.getElementById('zabiegi-grid');
+    if(!grid||!data.zabiegi)return;
+    grid.innerHTML=data.zabiegi.map((z,i)=>{
+      const delay=((i*0.05)+0.05).toFixed(2);
+      const media=z.zdjecie
+        ?`<img src="${z.zdjecie}" style="width:38px;height:38px;object-fit:cover;margin-bottom:18px;opacity:.7" alt="${z.nazwa} — salon beauty Gorlice">`
+        :`<svg class="si2" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">${ICONS[z.id]||DEFAULT}</svg>`;
+      return `<button class="sc sr" style="transition-delay:${delay}s" onclick="om('${z.id}')">${media}<div class="sn2">${z.nazwa}</div><div class="sd2">${z.opis}</div><span class="sa">Więcej →</span></button>`;
+    }).join('');
+    if(window._srObs)grid.querySelectorAll('.sr').forEach(el=>window._srObs.observe(el));
+  }
+
+  function renderCennik(data){
+    const root=document.getElementById('cennik-root');
+    if(!root||!data.kategorie||!data.kategorie.length)return;
+    const activeBtns=root.querySelectorAll('.pcb');
+    let activeIdx=0;
+    activeBtns.forEach((b,i)=>{if(b.classList.contains('active'))activeIdx=i;});
+    const cats=data.kategorie.map((k,i)=>
+      `<button class="pcb${i===activeIdx?' active':''}" onclick="spcDyn(${i},this)">${k.nazwa}</button>`
+    ).join('');
+    const tables=data.kategorie.map((k,i)=>{
+      const rows=k.zabiegi&&k.zabiegi.length
+        ?k.zabiegi.map(z=>`<tr><td>${z.nazwa||'—'}</td><td>${z.cena||'—'}</td></tr>`).join('')
+        :'<tr><td colspan="2" style="text-align:center;opacity:.4;font-style:italic;padding:18px 0">Cennik w przygotowaniu</td></tr>';
+      return `<div class="ptw${i===activeIdx?' active':''}" id="pl-cat-${i}"><table class="ptab"><thead><tr><th>${k.naglowek||'Zabieg'}</th><th>Cena od</th></tr></thead><tbody>${rows}</tbody></table><p class="pnote">Skontaktuj się z nami: 18 352 25 64</p></div>`;
+    }).join('');
+    root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
+  }
+
+  function fetchJSON(file){
+    return fetch(file+'?_='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+  }
+
+  fetchJSON('zabiegi.json').then(d=>{lastZabiegiJSON=JSON.stringify(d);renderZabiegi(d);}).catch(()=>{});
+  fetchJSON('cennik.json').then(d=>{lastCennikJSON=JSON.stringify(d);renderCennik(d);}).catch(()=>{
+    const root=document.getElementById('cennik-root');
+    if(root)root.innerHTML='<p class="pnote" style="padding:40px 0;text-align:center">Prosimy o kontakt telefoniczny: 18 352 25 64</p>';
+  });
+
+  setInterval(function(){
+    fetchJSON('cennik.json').then(d=>{const j=JSON.stringify(d);if(j!==lastCennikJSON){lastCennikJSON=j;renderCennik(d);}}).catch(()=>{});
+    fetchJSON('zabiegi.json').then(d=>{const j=JSON.stringify(d);if(j!==lastZabiegiJSON){lastZabiegiJSON=j;renderZabiegi(d);}}).catch(()=>{});
+  },5000);
 })();
 </script>
 
