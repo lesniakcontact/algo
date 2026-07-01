@@ -134,8 +134,20 @@
 </head>
 <body>
 
+<!-- MASTER PASSWORD -->
+<div id="master-screen" style="display:none">
+  <div class="login-box">
+    <div class="login-logo">ALGO</div>
+    <div class="login-sub">Panel Administratora</div>
+    <label for="master-input">Hasło dostępu</label>
+    <input type="password" id="master-input" autocomplete="off" />
+    <button class="btn-gold" id="master-btn">Dalej</button>
+    <div id="master-error"></div>
+  </div>
+</div>
+
 <!-- LOGIN -->
-<div id="login-screen">
+<div id="login-screen" style="display:none">
   <div class="login-box">
     <div class="login-logo">ALGO</div>
     <div class="login-sub">Panel Administratora</div>
@@ -183,6 +195,8 @@
 <script>
 const REPO = 'lesniakcontact/algo';
 const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
+const MASTER_PASSWORD_HASH = '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
+
 // State
 let cennikSHA = '', cennikData = null;
 let zabiegiSHA = '', zabiegiData = null;
@@ -221,6 +235,36 @@ async function ghPut(file, sha, data, msg) {
   return (await res.json()).content.sha;
 }
 
+// ── MASTER PASSWORD ────────────────────────────────────────────────────────
+
+async function hashStr(s) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+document.getElementById('master-btn').addEventListener('click', doMasterLogin);
+document.getElementById('master-input').addEventListener('keydown', e => { if (e.key==='Enter') doMasterLogin(); });
+
+async function doMasterLogin() {
+  const val = document.getElementById('master-input').value;
+  if (!val) return;
+  const btn = document.getElementById('master-btn');
+  const errEl = document.getElementById('master-error');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  const h = await hashStr(val);
+  if (h !== MASTER_PASSWORD_HASH) {
+    errEl.textContent = 'Nieprawidłowe hasło';
+    btn.disabled = false;
+    btn.textContent = 'Dalej';
+    return;
+  }
+  sessionStorage.setItem('algo_master', '1');
+  document.getElementById('master-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd-input').focus();
+}
+
 // ── AUTH ───────────────────────────────────────────────────────────────────
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
@@ -257,7 +301,10 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  if (sessionStorage.getItem('algo_pat')) {
+  const hasMaster = sessionStorage.getItem('algo_master') === '1';
+  const hasPat = sessionStorage.getItem('algo_pat');
+
+  if (hasMaster && hasPat) {
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
@@ -268,7 +315,14 @@ window.addEventListener('DOMContentLoaded', async () => {
       sessionStorage.removeItem('algo_pat');
       btn.disabled = false;
       btn.textContent = 'Zaloguj';
+      document.getElementById('login-screen').style.display = 'flex';
     }
+  } else if (hasMaster) {
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pwd-input').focus();
+  } else {
+    document.getElementById('master-screen').style.display = 'flex';
+    document.getElementById('master-input').focus();
   }
 });
 
