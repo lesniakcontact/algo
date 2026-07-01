@@ -252,7 +252,7 @@ async function doLogin() {
 
   try {
     await loadAllData();
-    localStorage.setItem('algo_auth', '1');
+    sessionStorage.setItem('algo_auth', '1');
     showPanel();
   } catch(e) {
     errEl.textContent = `Błąd połączenia: ${e.message}`;
@@ -262,7 +262,7 @@ async function doLogin() {
 }
 
 document.getElementById('logout-btn').addEventListener('click', () => {
-  localStorage.removeItem('algo_auth');
+  sessionStorage.removeItem('algo_auth');
   cennikData = null; cennikSHA = '';
   zabiegiData = null; zabiegiSHA = '';
   document.getElementById('pwd-input').value = '';
@@ -272,7 +272,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  if (localStorage.getItem('algo_auth') === '1') {
+  if (sessionStorage.getItem('algo_auth') === '1') {
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
@@ -280,7 +280,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       await loadAllData();
       showPanel();
     } catch {
-      localStorage.removeItem('algo_auth');
+      sessionStorage.removeItem('algo_auth');
       btn.disabled = false;
       btn.textContent = 'Zaloguj';
     }
