@@ -134,25 +134,13 @@
 </head>
 <body>
 
-<!-- MASTER PASSWORD -->
-<div id="master-screen" style="display:none">
-  <div class="login-box">
-    <div class="login-logo">ALGO</div>
-    <div class="login-sub">Panel Administratora</div>
-    <label for="master-input">Hasło dostępu</label>
-    <input type="password" id="master-input" autocomplete="off" />
-    <button class="btn-gold" id="master-btn">Dalej</button>
-    <div id="master-error"></div>
-  </div>
-</div>
-
 <!-- LOGIN -->
 <div id="login-screen" style="display:none">
   <div class="login-box">
     <div class="login-logo">ALGO</div>
     <div class="login-sub">Panel Administratora</div>
-    <label for="pwd-input">Token dostępu (GitHub PAT)</label>
-    <input type="password" id="pwd-input" autocomplete="off" placeholder="ghp_…" />
+    <label for="pwd-input">Hasło dostępu</label>
+    <input type="password" id="pwd-input" autocomplete="current-password" />
     <button class="btn-gold" id="login-btn">Zaloguj</button>
     <div id="login-error"></div>
   </div>
@@ -195,7 +183,21 @@
 <script>
 const REPO = 'lesniakcontact/algo';
 const API_BASE = `https://api.github.com/repos/${REPO}/contents/`;
-const MASTER_PASSWORD_HASH = '3a76aae39c8b2675aa193e16ffe3ecc497a83e65841238517d6761c7814a2645';
+const ENCRYPTED_PAT = 'uRk/VE5ab0EZYjgPdvudS/Ey2EACV7pULjXysw9uHxOGwqVDMvzBUko1PrLMDd4ujReY1jGmYbZbSR1rQ+VawuzdDWGp3klEqPvvX/zVNuP0ynz5';
+
+async function decryptPAT(password) {
+  const data = Uint8Array.from(atob(ENCRYPTED_PAT), c => c.charCodeAt(0));
+  const salt = data.slice(0, 16);
+  const iv = data.slice(16, 28);
+  const ciphertextWithTag = data.slice(28);
+  const keyMaterial = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+    keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
+  );
+  const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertextWithTag);
+  return new TextDecoder().decode(dec);
+}
 
 // State
 let cennikSHA = '', cennikData = null;
@@ -235,49 +237,29 @@ async function ghPut(file, sha, data, msg) {
   return (await res.json()).content.sha;
 }
 
-// ── MASTER PASSWORD ────────────────────────────────────────────────────────
-
-async function hashStr(s) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-document.getElementById('master-btn').addEventListener('click', doMasterLogin);
-document.getElementById('master-input').addEventListener('keydown', e => { if (e.key==='Enter') doMasterLogin(); });
-
-async function doMasterLogin() {
-  const val = document.getElementById('master-input').value;
-  if (!val) return;
-  const btn = document.getElementById('master-btn');
-  const errEl = document.getElementById('master-error');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>';
-  const h = await hashStr(val);
-  if (h !== MASTER_PASSWORD_HASH) {
-    errEl.textContent = 'Nieprawidłowe hasło';
-    btn.disabled = false;
-    btn.textContent = 'Dalej';
-    return;
-  }
-  sessionStorage.setItem('algo_master', '1');
-  document.getElementById('master-screen').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('pwd-input').focus();
-}
-
 // ── AUTH ───────────────────────────────────────────────────────────────────
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
 document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 
 async function doLogin() {
-  const pat = document.getElementById('pwd-input').value.trim();
-  if (!pat) return;
+  const pwd = document.getElementById('pwd-input').value;
+  if (!pwd) return;
   const btn = document.getElementById('login-btn');
   const errEl = document.getElementById('login-error');
   errEl.textContent = '';
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
+
+  let pat;
+  try {
+    pat = await decryptPAT(pwd);
+  } catch {
+    errEl.textContent = 'Nieprawidłowe hasło';
+    btn.disabled = false;
+    btn.textContent = 'Zaloguj';
+    return;
+  }
 
   sessionStorage.setItem('algo_pat', pat);
   try {
@@ -285,7 +267,7 @@ async function doLogin() {
     showPanel();
   } catch(e) {
     sessionStorage.removeItem('algo_pat');
-    errEl.textContent = `Nieprawidłowy token lub błąd połączenia`;
+    errEl.textContent = `Błąd połączenia: ${e.message}`;
     btn.disabled = false;
     btn.textContent = 'Zaloguj';
   }
@@ -301,10 +283,8 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const hasMaster = sessionStorage.getItem('algo_master') === '1';
-  const hasPat = sessionStorage.getItem('algo_pat');
-
-  if (hasMaster && hasPat) {
+  const pat = sessionStorage.getItem('algo_pat');
+  if (pat) {
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>';
@@ -316,13 +296,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       btn.disabled = false;
       btn.textContent = 'Zaloguj';
       document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('pwd-input').focus();
     }
-  } else if (hasMaster) {
+  } else {
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwd-input').focus();
-  } else {
-    document.getElementById('master-screen').style.display = 'flex';
-    document.getElementById('master-input').focus();
   }
 });
 
