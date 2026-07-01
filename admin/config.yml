@@ -1,0 +1,47 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "cennik"
+    label: "Cennik zabiegów"
+    files:
+      - label: "Cennik"
+        name: "cennik"
+        file: "cennik.json"
+        format: json
+        fields:
+          - label: "Kategorie"
+            name: "kategorie"
+            widget: "list"
+            label_singular: "Kategoria"
+            fields:
+              - label: "ID (nie zmieniaj)"
+                name: "id"
+                widget: "string"
+                hint: "Identyfikator techniczny — np. laser, kos, mez. Nie zmieniaj."
+              - label: "Nazwa kategorii"
+                name: "nazwa"
+                widget: "string"
+              - label: "Nagłówek tabeli"
+                name: "naglowek"
+                widget: "select"
+                options:
+                  - { label: "Zabieg", value: "Zabieg" }
+                  - { label: "Pakiet", value: "Pakiet" }
+                default: "Zabieg"
+              - label: "Zabiegi"
+                name: "zabiegi"
+                widget: "list"
+                label_singular: "Zabieg"
+                fields:
+                  - label: "Nazwa zabiegu"
+                    name: "nazwa"
+                    widget: "string"
+                  - label: "Cena (zł)"
+                    name: "cena"
+                    widget: "string"
+                    hint: "Sama liczba lub zakres, np. 150 lub 150–250 (bez słowa zł)"

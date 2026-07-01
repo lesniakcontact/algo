@@ -1,0 +1,90 @@
+{
+  "kategorie": [
+    {
+      "id": "laser",
+      "nazwa": "Pielęgnacja twarzy",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "Laserowe usuwanie owłosienia (IPL)", "cena": "—" },
+        { "nazwa": "Zabiegi antytrądzikowe i regulujące", "cena": "—" },
+        { "nazwa": "Peeling chemiczny i enzymatyczny", "cena": "—" },
+        { "nazwa": "Pielęgnacja skóry dojrzałej i wrażliwej", "cena": "—" },
+        { "nazwa": "Usuwanie przebarwień i plam pigmentacyjnych", "cena": "—" },
+        { "nazwa": "Laserowy peeling węglowy Black Doll", "cena": "—" }
+      ]
+    },
+    {
+      "id": "kos",
+      "nazwa": "Kosmetologia",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "Odmładzanie i liftingowanie twarzy", "cena": "—" },
+        { "nazwa": "Leczenie trądziku — oczyszczanie manualne", "cena": "—" },
+        { "nazwa": "Redukcja przebarwień i blizn potrądzikowych", "cena": "—" },
+        { "nazwa": "Peeling medyczny (AHA, BHA, retinol, TCA)", "cena": "—" },
+        { "nazwa": "Mikrodermabrazja diamentowa", "cena": "—" },
+        { "nazwa": "Peeling kawitacyjny", "cena": "—" }
+      ]
+    },
+    {
+      "id": "mez",
+      "nazwa": "Mezoterapie",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "Dermapen — mezoterapia frakcyjna", "cena": "—" },
+        { "nazwa": "Mezoterapia mikroigłowa", "cena": "—" },
+        { "nazwa": "Mezoterapia bezigłowa", "cena": "—" },
+        { "nazwa": "ThermoFraxel (mikroigły + fale radiowe)", "cena": "—" }
+      ]
+    },
+    {
+      "id": "try",
+      "nazwa": "Trychologia",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "Hair Filler — mezoterapia igłowa", "cena": "—" },
+        { "nazwa": "Trychologia estetyczna — mezoterapia mikroigłowa", "cena": "—" },
+        { "nazwa": "Trychologia kosmetyczna", "cena": "—" },
+        { "nazwa": "Mikropigmentacja skóry głowy", "cena": "—" }
+      ]
+    },
+    {
+      "id": "wys",
+      "nazwa": "Wyszczuplanie",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "LipoLaser — laserowa redukcja tłuszczu", "cena": "—" },
+        { "nazwa": "Presoterapia BOA — drenaż limfatyczny", "cena": "—" },
+        { "nazwa": "Dermologica — dermomasaż podciśnieniowy", "cena": "—" },
+        { "nazwa": "Liposukcja IR (podczerwień)", "cena": "—" },
+        { "nazwa": "Tlenoterapia hiperbaryczna", "cena": "—" }
+      ]
+    },
+    {
+      "id": "man",
+      "nazwa": "Manicure / Pedicure",
+      "naglowek": "Zabieg",
+      "zabiegi": [
+        { "nazwa": "Manicure klasyczny", "cena": "—" },
+        { "nazwa": "Manicure hybrydowy", "cena": "—" },
+        { "nazwa": "Stylizacja żelowa i akrylowa", "cena": "—" },
+        { "nazwa": "Pedicure kosmetyczny", "cena": "—" },
+        { "nazwa": "Pedicure hybrydowy", "cena": "—" },
+        { "nazwa": "Odmładzanie dłoni (peeling, maska, masaż)", "cena": "—" }
+      ]
+    },
+    {
+      "id": "spa2",
+      "nazwa": "Day Spa",
+      "naglowek": "Pakiet",
+      "zabiegi": [
+        { "nazwa": "Pakiet relaksacyjny (masaż + zabieg na twarz)", "cena": "—" },
+        { "nazwa": "Day Spa Premium (~4h)", "cena": "—" },
+        { "nazwa": "Pakiet ślubny", "cena": "—" },
+        { "nazwa": "Masaż Kobido — lifting japoński twarzy", "cena": "—" },
+        { "nazwa": "Masaż klasyczny całego ciała", "cena": "—" },
+        { "nazwa": "Masaż relaksacyjny aromaterapeutyczny", "cena": "—" }
+      ]
+    }
+  ]
+}
