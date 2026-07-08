@@ -3,3 +3,6 @@
 *.HEIC
 *.zip
 deploy/
+.sekret/
+.secret
+encrypt-pat.mjs
