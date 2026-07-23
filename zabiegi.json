@@ -37,12 +37,6 @@
       "zdjecie": ""
     },
     {
-      "id": "spa",
-      "nazwa": "Day Spa & Masaże",
-      "opis": "Pakiety relaksacyjne, masaż Kobido, pakiety ślubne.",
-      "zdjecie": ""
-    },
-    {
       "id": "rzes",
       "nazwa": "Przedłużanie rzęs",
       "opis": "Metoda 1:1, objętościowa, lifting, laminacja, botulina.",
@@ -70,6 +64,12 @@
       "id": "karta",
       "nazwa": "Karta podarunkowa",
       "opis": "Idealny prezent — dowolna kwota, ważna 12 miesięcy.",
+      "zdjecie": ""
+    },
+    {
+      "id": "nowy_1784823133723",
+      "nazwa": "Nowy zabieg ",
+      "opis": "Opis zabiegu",
       "zdjecie": ""
     }
   ]
