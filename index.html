@@ -1375,10 +1375,21 @@ function spcDyn(i,btn){
     root.innerHTML=`<div class="pcats">${cats}</div>${tables}`;
   }
 
+  const GH_API='https://api.github.com/repos/lesniakcontact/algo/contents/';
   const GH_RAW='https://raw.githubusercontent.com/lesniakcontact/algo/main/';
-  function fetchJSON(file){
+  function b64d(s){return decodeURIComponent(escape(atob(s)));}
+  function fetchRaw(file){
+    // raw CDN: bez limitu, cache do 5 min (query jest ignorowane przez Fastly)
     return fetch(GH_RAW+file+'?t='+Date.now(),{cache:'no-store'})
       .then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+  }
+  function fetchJSON(file){
+    // Najpierw contents API (natychmiastowe, bez CDN cache) — przy limicie 60/h/IP (403)
+    // graceful fallback na raw, wiec strona nigdy nie jest pusta.
+    return fetch(GH_API+file,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}})
+      .then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(j=>JSON.parse(b64d(j.content.replace(/\n/g,''))))
+      .catch(()=>fetchRaw(file));
   }
 
   fetchJSON('zabiegi.json').then(d=>{lastZabiegiJSON=JSON.stringify(d);renderZabiegi(d);}).catch(()=>{});
