@@ -1398,10 +1398,11 @@ function spcDyn(i,btn){
     if(root)root.innerHTML='<p class="pnote" style="padding:40px 0;text-align:center">Prosimy o kontakt telefoniczny: 18 352 25 64</p>';
   });
 
+  // Poll w tle przez raw (bez limitu) — nie pali limitu 60/h api. Pierwsze ladowanie zostaje na fetchJSON (api, instant).
   setInterval(function(){
-    fetchJSON('cennik.json').then(d=>{const j=JSON.stringify(d);if(j!==lastCennikJSON){lastCennikJSON=j;renderCennik(d);}}).catch(()=>{});
-    fetchJSON('zabiegi.json').then(d=>{const j=JSON.stringify(d);if(j!==lastZabiegiJSON){lastZabiegiJSON=j;renderZabiegi(d);}}).catch(()=>{});
-  },120000);
+    fetchRaw('cennik.json').then(d=>{const j=JSON.stringify(d);if(j!==lastCennikJSON){lastCennikJSON=j;renderCennik(d);}}).catch(()=>{});
+    fetchRaw('zabiegi.json').then(d=>{const j=JSON.stringify(d);if(j!==lastZabiegiJSON){lastZabiegiJSON=j;renderZabiegi(d);}}).catch(()=>{});
+  },300000);
 })();
 </script>
 
