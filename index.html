@@ -24,7 +24,7 @@
 {
   "@context": "https://schema.org",
   "@type": "BeautySalon",
-  "name": "ALGO Gabinet Kosmetyczny Faliszek A.",
+  "name": "ALGO Gabinet Kosmetyczny Faliszek-Mazur A.",
   "alternateName": "Salon Beauty Gorlice ALGO",
   "description": "Profesjonalny salon beauty i centrum urody w Gorlicach. Manicure hybrydowy, makijaż permanentny, pielęgnacja twarzy, mezoterapie, zabiegi laserowe IPL.",
   "url": "https://algo-gorlice.pl/",
@@ -439,6 +439,46 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
 .fls button:hover{color:var(--gold)}
 .fcp{font-size:9.5px;color:rgba(255,253,249,.22);letter-spacing:1px}
 
+/* ═══ COOKIES ═══════════════════════════════════════════ */
+#ck{position:fixed;left:30px;bottom:30px;z-index:995;width:340px;max-width:calc(100vw - 32px);
+  background:#0F0B02;border:1px solid rgba(184,134,11,.22);border-top:1px solid var(--gold);
+  border-radius:3px;padding:22px 24px 20px;
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .45s ease,transform .45s ease}
+#ck.vis{opacity:1;transform:translateY(0);pointer-events:auto}
+#ck .ck-tag{font-size:9px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+#ck p{font-size:12.5px;line-height:1.7;font-weight:300;color:var(--text);opacity:.75}
+#ck .ck-more{color:rgba(201,168,76,.9);text-decoration:underline;text-underline-offset:3px;
+  background:none;border:none;cursor:none;font-family:'Jost',sans-serif;font-size:12.5px;font-weight:300;padding:0}
+#ck .ck-more:hover{color:#FFFDF5}
+#ck .ck-row{display:flex;gap:10px;margin-top:18px}
+#ck .ck-ok{background:var(--gold);color:#0A0700;border:none;cursor:none;
+  padding:11px 18px;font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:2.5px;
+  text-transform:uppercase;font-weight:500;transition:background .25s}
+#ck .ck-ok:hover{background:#D4AF37}
+#ck .ck-no{background:none;color:rgba(245,232,192,.5);border:none;cursor:none;
+  padding:11px 4px;font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:2.5px;
+  text-transform:uppercase;font-weight:400;transition:color .25s}
+#ck .ck-no:hover{color:var(--gold)}
+
+/* ═══ STRONA PRAWNA ═════════════════════════════════════ */
+.leg{max-width:760px;margin:0 auto}
+.leg h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:400;color:#FFFDF5;
+  margin:44px 0 14px;padding-bottom:10px;border-bottom:1px solid rgba(184,134,11,.18)}
+.leg h3:first-of-type{margin-top:0}
+.leg p{font-size:13.5px;line-height:1.85;font-weight:300;color:var(--text);opacity:.8;margin-bottom:12px}
+.leg ul{list-style:none;margin:0 0 12px}
+.leg li{font-size:13.5px;line-height:1.75;font-weight:300;color:var(--text);opacity:.8;padding:7px 0 7px 16px;position:relative}
+.leg li::before{content:'';position:absolute;left:0;top:15px;width:4px;height:4px;border-radius:50%;background:var(--gold)}
+.leg strong{font-weight:500;color:#FFFDF5;opacity:1}
+.leg a{color:rgba(201,168,76,.9);text-decoration:underline;text-underline-offset:3px}
+.leg a:hover{color:#FFFDF5}
+.leg .leg-meta{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,232,192,.35);margin-top:48px}
+.leg .leg-btn{margin-top:16px;background:none;border:1px solid rgba(201,168,76,.35);border-radius:3px;
+  color:rgba(201,168,76,.85);cursor:none;padding:13px 20px;font-family:'Jost',sans-serif;
+  font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;transition:all .25s}
+.leg .leg-btn:hover{color:#FFFDF5;border-color:rgba(255,253,245,.55);background:rgba(201,168,76,.1)}
+
 /* ═══ RESPONSIVE ════════════════════════════════════════ */
 @media(max-width:1024px){
   header{padding:0 20px}nav{display:none}
@@ -540,6 +580,10 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
 .rating-label{font-size:10px;color:#C9A84C;letter-spacing:1.5px;text-transform:uppercase}
 
 @media(max-width:1024px){#sticky-cta{bottom:20px;right:16px}}
+@media(max-width:700px){
+  #ck{left:12px;right:12px;bottom:12px;width:auto;padding:18px 18px 16px}
+  body.ck-open #sticky-cta{opacity:0;pointer-events:none}
+}
 
 /* ═══ JAK DZIAŁAMY ════════════════════════════════════════ */
 .jak-dzialamy{padding:88px 80px;background:var(--cream)}
@@ -774,7 +818,7 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
       <div class="at">
         <span class="stag sr">Nasza historia</span>
         <h2 class="sr" style="transition-delay:.1s">Gabinet <em>z pasją</em><br>do piękna</h2>
-        <p class="sr" style="transition-delay:.2s">Algo. Gabinet Kosmetyczny Faliszek A. to miejsce, gdzie pielęgnacja staje się prawdziwą sztuką. Mieścimy się w Gorlicach przy ul. Biecka 1 w Galerii Rondo Center.</p>
+        <p class="sr" style="transition-delay:.2s">Algo. Gabinet Kosmetyczny Faliszek-Mazur A. to miejsce, gdzie pielęgnacja staje się prawdziwą sztuką. Mieścimy się w Gorlicach przy ul. Biecka 1 w Galerii Rondo Center.</p>
         <p class="sr" style="transition-delay:.3s">Nasze podejście łączy dbałość o komfort klienta z ogromną wiedzą i profesjonalizmem — to doceniają nasi klienci w opiniach.</p>
         <p class="sr" style="transition-delay:.4s">Pracujemy z pasją, dbając o każdy detal — bo Twoje piękno zasługuje na to, co najlepsze.</p>
         <div class="aw-row sr" style="transition-delay:.5s">
@@ -791,7 +835,7 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
       <div class="sline sr" style="transition-delay:.2s"></div>
     </div>
     <div class="tg">
-      <div class="tc sr" style="transition-delay:.1s"><div class="tav">A</div><div class="tname">A. Faliszek</div><div class="trole">Właścicielka</div><div class="tbio">Właścicielka gabinetu z ogromną wiedzą i pasją do pielęgnacji. Klientki podkreślają jej profesjonalizm i pozytywną atmosferę.</div></div>
+      <div class="tc sr" style="transition-delay:.1s"><div class="tav">A</div><div class="tname">A. Faliszek-Mazur</div><div class="trole">Właścicielka</div><div class="tbio">Właścicielka gabinetu z ogromną wiedzą i pasją do pielęgnacji. Klientki podkreślają jej profesjonalizm i pozytywną atmosferę.</div></div>
       <div class="tc sr" style="transition-delay:.2s;border:2px dashed rgba(184,134,11,.2)"><div class="tav" style="background:rgba(184,134,11,.08);color:rgba(201,168,76,.3)">?</div><div class="tname" style="color:rgba(245,232,192,.25)">Imię i nazwisko</div><div class="trole" style="color:rgba(201,168,76,.2)">Stanowisko</div><div class="tbio" style="color:rgba(245,232,192,.2)">Opis pracownika zostanie uzupełniony wkrótce.</div></div>
     </div>
 
@@ -818,7 +862,7 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
       <span class="stag">Jesteśmy do dyspozycji</span>
       <h2>Zapraszamy<br><em>do salonu</em></h2>
       <div class="cd"><div class="cion">☏</div><div class="cinf"><strong>Telefon</strong>18 352 25 64</div></div>
-      <div class="cd"><div class="cion">📍</div><div class="cinf"><strong>Adres</strong>Algo. Gabinet Kosmetyczny. Faliszek A.<br>Biecka 1, 38-300 Gorlice<br>Galeria Rondo Center</div></div>
+      <div class="cd"><div class="cion">📍</div><div class="cinf"><strong>Adres</strong>Algo. Gabinet Kosmetyczny. Faliszek-Mazur A.<br>Biecka 1, 38-300 Gorlice<br>Galeria Rondo Center</div></div>
       <div class="cd"><div class="cion">🕐</div><div class="cinf"><strong>Godziny otwarcia</strong>Poniedziałek – Sobota: 10:00 – 18:00<br>Niedziela: Zamknięte</div></div>
       <div style="display:flex;gap:10px;margin-top:28px;flex-wrap:wrap">
         <a href="https://www.instagram.com/" target="_blank" style="background:var(--gold);color:var(--dark);padding:9px 18px;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Instagram</a>
@@ -844,6 +888,75 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
   </div>
 </div>
 
+<!-- ═══ PAGE POLITYKA PRYWATNOŚCI I COOKIES ════════════════ -->
+<div class="page" id="page-polityka">
+  <div class="ps">
+    <div class="sh">
+      <span class="stag sr">Dane i prywatność</span>
+      <h2 class="stit sr" style="transition-delay:.1s">Polityka prywatności<br>i <em>plików cookies</em></h2>
+      <div class="sline sr" style="transition-delay:.2s"></div>
+    </div>
+    <div class="leg">
+
+      <h3>Kto przetwarza Twoje dane</h3>
+      <p>Administratorem danych jest <strong>Algo. Gabinet Kosmetyczny Faliszek-Mazur A.</strong>, ul. Biecka 1, 38-300 Gorlice (Galeria Rondo Center).</p>
+      <p>Kontakt w sprawie danych: telefon <strong>18 352 25 64</strong>, e-mail <a href="mailto:kontakt@algo-gorlice.pl">kontakt@algo-gorlice.pl</a>, albo osobiście w gabinecie w godzinach otwarcia.</p>
+
+      <h3>Jakie dane zbieramy</h3>
+      <ul>
+        <li><strong>Z formularza kontaktowego</strong> — imię i nazwisko, telefon, e-mail, wybrana kategoria zabiegu i treść wiadomości. Podajesz je dobrowolnie; bez nich nie oddzwonimy.</li>
+        <li><strong>Z rozmowy telefonicznej</strong> — imię i numer telefonu potrzebne do umówienia i potwierdzenia wizyty.</li>
+        <li><strong>Techniczne dane przeglądarki</strong> — adres IP i rodzaj przeglądarki, zapisywane automatycznie przez serwer, na którym stoi strona.</li>
+      </ul>
+      <p>Nie prosimy przez stronę o dane wrażliwe. O stanie zdrowia i przeciwwskazaniach rozmawiamy dopiero na konsultacji w gabinecie i zapisujemy je w karcie zabiegowej, poza tą stroną.</p>
+
+      <h3>Po co i na jakiej podstawie</h3>
+      <ul>
+        <li>Odpowiedź na zapytanie i umówienie wizyty — art. 6 ust. 1 lit. b RODO (działania przed zawarciem umowy).</li>
+        <li>Kontakt w sprawie już umówionego zabiegu — art. 6 ust. 1 lit. b RODO.</li>
+        <li>Bezpieczeństwo i poprawne działanie strony — art. 6 ust. 1 lit. f RODO (nasz uzasadniony interes).</li>
+      </ul>
+      <p>Nie wysyłamy newslettera, nie profilujemy Cię i nie podejmujemy wobec Ciebie decyzji automatycznych.</p>
+
+      <h3>Jak długo je trzymamy</h3>
+      <ul>
+        <li>Zapytania, które nie skończyły się wizytą — do 12 miesięcy od ostatniego kontaktu.</li>
+        <li>Dane klientek i klientów gabinetu — przez czas współpracy oraz okres wynikający z przepisów podatkowych i przedawnienia roszczeń.</li>
+        <li>Logi serwera — zgodnie z polityką dostawcy hostingu, zwykle do 30 dni.</li>
+      </ul>
+
+      <h3>Komu je przekazujemy</h3>
+      <p>Nie sprzedajemy i nie udostępniamy danych w celach marketingowych. Dostęp mają wyłącznie:</p>
+      <ul>
+        <li>osoby pracujące w gabinecie, w zakresie potrzebnym do obsługi wizyty,</li>
+        <li>dostawca hostingu strony (Netlify) i dostawca poczty — jako podmioty przetwarzające,</li>
+        <li>biuro rachunkowe i organy państwowe, jeśli wymagają tego przepisy.</li>
+      </ul>
+
+      <h3>Twoje prawa</h3>
+      <p>Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie. Wystarczy telefon lub e-mail — zajmiemy się tym w ciągu miesiąca.</p>
+      <p>Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa.</p>
+
+      <h3>Pliki cookies i podobne technologie</h3>
+      <p>Ta strona jest prosta i nie zarabia na Twoich danych. Nie ma tu Google Analytics, piksela Facebooka ani żadnych cookies reklamowych. Używamy tylko tego, co potrzebne, żeby strona działała i wyglądała jak trzeba:</p>
+      <ul>
+        <li><strong>algo_cookie_consent</strong> (pamięć lokalna przeglądarki, nasza) — zapamiętuje Twój wybór z paska cookies, żeby nie pytać przy każdej wizycie. Zostaje na urządzeniu do czasu wyczyszczenia danych przeglądarki.</li>
+        <li><strong>Google Fonts</strong> — kroje pisma Cormorant Garamond i Jost pobierane z serwerów Google; przy pobraniu Google widzi Twój adres IP.</li>
+        <li><strong>jsDelivr</strong> — biblioteka galerii zdjęć (Swiper), pobierana z sieci CDN.</li>
+        <li><strong>GitHub</strong> — stamtąd strona pobiera aktualny cennik i listę zabiegów, żeby ceny były zawsze świeże.</li>
+        <li><strong>Netlify</strong> — hosting strony oraz logowanie do panelu, z którego aktualizujemy cennik. Panel jest tylko dla obsługi gabinetu.</li>
+      </ul>
+      <p>Klikając ikony Instagrama lub Facebooka przechodzisz na zewnętrzne serwisy, które mają własne zasady prywatności — my nie osadzamy tu ich wtyczek ani nie przekazujemy im Twoich danych.</p>
+
+      <h3>Jak zmienić decyzję</h3>
+      <p>Wybór z paska cookies możesz cofnąć w każdej chwili. Cookies kontrolujesz też w ustawieniach przeglądarki — możesz je zablokować lub usunąć, choć wtedy część elementów strony (np. galeria) może działać gorzej.</p>
+      <button class="leg-btn" onclick="ckReset()">Zmień decyzję o cookies</button>
+
+      <div class="leg-meta">Ostatnia aktualizacja: sierpień 2026</div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <button class="fl" onclick="sp('home')" style="background:none;border:none;cursor:none;padding:0;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:3px;color:#FFFFFF;text-transform:uppercase;text-align:left;line-height:1.1">ALGO<span style="display:block;font-weight:300;font-size:9px;letter-spacing:5px;color:var(--gold);margin-top:3px;font-family:'Jost',sans-serif;text-transform:uppercase">Gabinet Kosmetyczny</span></button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
@@ -854,10 +967,21 @@ footer{background:#0A0700;padding:42px 80px;display:flex;align-items:center;
       <button onclick="sp('cennik')">Cennik</button>
       <button onclick="sp('kontakt')">Kontakt</button>
     </div>
+    <div class="fls" style="gap:14px"><button onclick="sp('polityka')">Polityka prywatności i cookies</button></div>
     <div style="font-size:9.5px;color:rgba(255,253,249,.3);letter-spacing:1px">Stworzone przez: <a href="https://gloweb.pl/" target="_blank" rel="noopener" style="color:rgba(255,253,249,.4);text-decoration:underline;text-underline-offset:3px">Gloweb</a></div>
   </div>
   <div class="fcp" style="text-align:right">© 2026 Algo. Gabinet Kosmetyczny · Gorlice</div>
 </footer>
+
+<!-- COOKIES -->
+<div id="ck" role="dialog" aria-live="polite" aria-label="Informacja o plikach cookies">
+  <span class="ck-tag">Pliki cookies</span>
+  <p>Używamy tylko tego, co potrzebne, żeby strona działała — bez reklam i śledzenia. <button class="ck-more" onclick="ckDetails()">Szczegóły</button></p>
+  <div class="ck-row">
+    <button class="ck-ok" onclick="ckSet('all')">W porządku</button>
+    <button class="ck-no" onclick="ckSet('necessary')">Tylko niezbędne</button>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="mo" id="moverlay" onclick="cm()"></div>
@@ -1149,6 +1273,30 @@ function cm(){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')cm()});
+
+/* ═══════════════════════════════════════════════════════
+   COOKIES
+═══════════════════════════════════════════════════════ */
+const CK_KEY='algo_cookie_consent';
+function ckRead(){try{return localStorage.getItem(CK_KEY)}catch(e){return null}}
+function ckShow(){
+  document.getElementById('ck').classList.add('vis');
+  document.body.classList.add('ck-open');
+}
+function ckHide(){
+  document.getElementById('ck').classList.remove('vis');
+  document.body.classList.remove('ck-open');
+}
+function ckSet(choice){
+  try{localStorage.setItem(CK_KEY,choice)}catch(e){}
+  ckHide();
+}
+function ckDetails(){ckHide();sp('polityka')}
+function ckReset(){
+  try{localStorage.removeItem(CK_KEY)}catch(e){}
+  ckShow();
+}
+if(!ckRead())setTimeout(ckShow,1200);
 
 /* ═══════════════════════════════════════════════════════
    INIT
